@@ -3,12 +3,16 @@ var $win = $(window);
 var clientWidth = $win.width();
 var clientHeight = $win.height();
 
+var resizeTimer;
 $(window).resize(function() {
-    var newWidth = $win.width();
-    var newHeight = $win.height();
-    if (newWidth != clientWidth && newHeight != clientHeight) {
-        location.replace(location);
-    }
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+        var newWidth = $win.width();
+        var newHeight = $win.height();
+        if (newWidth != clientWidth && newHeight != clientHeight) {
+            location.replace(location);
+        }
+    }, 300);
 });
 
 (function($) {

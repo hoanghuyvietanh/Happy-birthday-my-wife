@@ -1,8 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,300;1,400&display=swap");
-
 html {
     scroll-behavior: smooth;
-    font-family: "Roboto", sans-serif;
+    font-family: "Roboto", system-ui, sans-serif;
 }
 
 a {
@@ -11,107 +9,84 @@ a {
 
 .page__main {
     /* Ảnh nền của trang đầu tiên nếu bạn muốn đổi thì đổi tại đây */
-    background-image: url("../img/background.png");
+    background-image: url("../img/background.jpg");
     background-repeat: no-repeat;
     margin: 0;
     padding: 0;
-    background-size: cover;
-    background-position-y: -15rem;
+    /* Phủ kín màn hình (bản cũ để trống phần dưới) và giữ nguyên vị trí chữ Happy Birthday */
+    min-height: 100vh;
+    min-height: 100svh;
+    background-size: auto max(calc(100vh + 15rem), calc(100vw * 0.6656));
+    background-position: center -15rem;
 }
+
 .buttons {
     display: flex;
+    flex-wrap: wrap;
     column-gap: 3rem;
     padding: 2rem;
 }
 
-.btn-bir:hover {
+/* Kiểu chung cho cả 3 nút menu */
+.btn {
+    margin: 10px;
+    padding: 15px 45px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+}
+
+.btn:hover {
     background-position: right center;
     color: #fff;
     text-decoration: none;
 }
 
 .btn-bir {
-    background-image: linear-gradient(
-        to right,
-        #314755 0%,
-        #26a0da 51%,
-        #314755 100%
-    );
-    margin: 10px;
-    padding: 15px 45px;
-    text-align: center;
-    text-transform: uppercase;
-    transition: 0.5s;
-    background-size: 200% auto;
-    color: white;
-    box-shadow: 0 0 20px #eee;
-    border-radius: 10px;
-    display: block;
+    background-image: linear-gradient(to right, #314755 0%, #26a0da 51%, #314755 100%);
 }
 
 .btn-timeline {
-    background-image: linear-gradient(
-        to right,
-        #da22ff 0%,
-        #9733ee 51%,
-        #da22ff 100%
-    );
-}
-.btn-timeline {
-    margin: 10px;
-    padding: 15px 45px;
-    text-align: center;
-    text-transform: uppercase;
-    transition: 0.5s;
-    background-size: 200% auto;
-    color: white;
-    box-shadow: 0 0 20px #eee;
-    border-radius: 10px;
-    display: block;
-}
-
-.btn-timeline:hover {
-    background-position: right center; 
-    color: #fff;
-    text-decoration: none;
+    background-image: linear-gradient(to right, #da22ff 0%, #9733ee 51%, #da22ff 100%);
 }
 
 .btn-gallery {
-    background-image: linear-gradient(
-        to right,
-        #02aab0 0%,
-        #00cdac 51%,
-        #02aab0 100%
-    );
-}
-.btn-gallery {
-    margin: 10px;
-    padding: 15px 45px;
-    text-align: center;
-    text-transform: uppercase;
-    transition: 0.5s;
-    background-size: 200% auto;
-    color: white;
-    box-shadow: 0 0 20px #eee;
-    border-radius: 10px;
-    display: block;
-}
-
-.btn-gallery:hover {
-    background-position: right center; /* change the direction of the change here */
-    color: #fff;
-    text-decoration: none;
+    background-image: linear-gradient(to right, #02aab0 0%, #00cdac 51%, #02aab0 100%);
 }
 
 .cover {
     width: 180px;
     height: 180px;
-   
+    object-fit: cover;
+    object-position: center 20%;
     box-shadow: 0 0 30px #eee;
     position: absolute;
     margin-top: -2rem;
     left: calc(50% - 100px);
-  
     border-radius: 120px;
     border: 5px solid rgb(255, 17, 0);
+}
+
+/* Điện thoại: menu gọn lại để không bị tràn màn hình */
+@media (max-width: 700px) {
+    .page__main {
+        background-size: cover;
+        background-position: 55% top;
+    }
+    .buttons {
+        column-gap: 0;
+        padding: 1rem;
+    }
+    .btn {
+        padding: 12px 20px;
+        font-size: 0.85rem;
+    }
+    .cover {
+        margin-top: 0;
+    }
 }
