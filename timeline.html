@@ -10,16 +10,21 @@
     <title>Thời gian bên nhau</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap">
-    <link rel="stylesheet" href="./css/default.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Dancing+Script:wght@700&display=swap">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/default.css">
 </head>
 <body>
-    <div class="buttons">
-        <a href="index.html" class="btn btn-bir">Chúc Mừng Sinh Nhật Em Yêu</a>
-        <a href="timeline.html" class="btn btn-timeline" aria-current="page">Quà Tặng To Đùng</a>
-        <a href="gallery.html" class="btn btn-gallery">Ảnh kỷ niệm</a>
-    </div>
+    <header class="topbar">
+        <a class="brand" href="index.html" aria-label="Trang chủ">
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </a>
+        <nav class="menu" aria-label="Điều hướng">
+            <a href="index.html">Chúc Mừng Sinh Nhật Em Yêu</a>
+            <a href="timeline.html" aria-current="page">Quà Tặng To Đùng</a>
+            <a href="gallery.html">Ảnh kỷ niệm</a>
+        </nav>
+    </header>
     <div id="main">
         <div id="wrap">
             <div id="text">
@@ -46,8 +51,8 @@
             </div>
             <div id="clock-box">
                 <!-- Có thể thay đổi chỗ này thành số tuổi của người bạn muốn chúc -->
-                <span class="STYLE1">Thời gian anh đã yêu em</span>
-                <div id="clock"></div>
+                <span class="title">Thời gian anh đã yêu em</span>
+                <div id="clock" class="units"></div>
             </div>
             <canvas id="canvas" width="1100" height="680"></canvas>
         </div>
@@ -66,6 +71,7 @@
     <script src="./js/jscex-builderbase.min.js"></script>
     <script src="./js/jscex-async.min.js"></script>
     <script src="./js/jscex-async-powerpack.min.js"></script>
+    <script src="./js/config.js"></script>
     <script src="./js/functions.js" charset="utf-8"></script>
     <script src="./js/love.js" charset="utf-8"></script>
     <script src="./js/music.js"></script>
@@ -180,7 +186,7 @@
             tree.snapshot("p2", 500, 0, 610, 680);
 
             canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
-            canvas.css("background", "#ffe");
+            canvas.css("background", "rgba(255, 255, 255, 0.55)");
             $await(Jscex.Async.sleep(300));
             canvas.css("background", "none");
         }));
@@ -196,13 +202,7 @@
         }));
 
         var textAnimate = eval(Jscex.compile("async", function () {
-            var together = new Date();
-            var year = 2022, month = 2, day = 1;  // 5. thay đổi ngày tháng năm yêu nhau tại đây hoặc ngày sinh của người mà bạn muốn chúc
-            together.setFullYear(year, month - 1, day);
-            together.setHours(0);
-            together.setMinutes(0);
-            together.setSeconds(0);
-            together.setMilliseconds(0);
+            var together = LOVE_START;  // 5. đổi ngày yêu nhau trong file js/config.js
 
             $("#code").show().typewriter();
             $("#clock-box").fadeIn(500);

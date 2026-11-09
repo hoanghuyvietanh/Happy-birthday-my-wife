@@ -4,78 +4,102 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Ảnh kỷ niệm của chúng mình" />
+        <meta name="theme-color" content="#ffe6f0" />
         <link rel="icon" type="image/png" href="./img/CILKGax.png" />
         <!-- Tiêu đề của trang ảnh kỷ niệm -->
         <title>Ảnh kỷ niệm</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" />
-        <link rel="stylesheet" href="./css/gallery.css" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Dancing+Script:wght@700&display=swap" />
         <link rel="stylesheet" href="./css/style.css" />
+        <link rel="stylesheet" href="./css/gallery.css" />
     </head>
     <body>
-        <div class="buttons">
-            <a href="index.html" class="btn btn-bir">Chúc Mừng Sinh Nhật Em Yêu</a>
-            <a href="timeline.html" class="btn btn-timeline">Quà Tặng To Đùng</a>
-            <a href="gallery.html" class="btn btn-gallery" aria-current="page">Ảnh kỷ niệm</a>
-        </div>
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="Trang chủ">
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </a>
+            <nav class="menu" aria-label="Điều hướng">
+                <a href="index.html">Chúc Mừng Sinh Nhật Em Yêu</a>
+                <a href="timeline.html">Quà Tặng To Đùng</a>
+                <a href="gallery.html" aria-current="page">Ảnh kỷ niệm</a>
+            </nav>
+        </header>
 
-        <!-- 6. Thay tất cả bằng hình ảnh của bạn (nhớ ghi đúng width và height của ảnh để trang không bị giật) -->
-        <div class="gallery" id="gallery">
-            <div class="gallery-item">
-                <div class="content"><img src="./img/1a.jpg" alt="Kỷ niệm 1" width="1800" height="1648" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/2a.jpg" alt="Kỷ niệm 2" width="1350" height="1800" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/3a.jpg" alt="Kỷ niệm 3" width="1350" height="1800" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/4a.jpg" alt="Kỷ niệm 4" width="1350" height="1800" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/6a.jpg" alt="Kỷ niệm 5" width="1620" height="1440" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/5a.jpg" alt="Kỷ niệm 6" width="1350" height="1800" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/7a.jpg" alt="Kỷ niệm 7" width="1350" height="1800" loading="lazy" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/8a.jpg" alt="Kỷ niệm 8" width="1013" height="1800" loading="lazy" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/9a.jpg" alt="Kỷ niệm 9" width="1013" height="1800" loading="lazy" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/10a.jpg" alt="Kỷ niệm 10" width="1350" height="1800" loading="lazy" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/11a.jpg" alt="Kỷ niệm 11" width="1625" height="1800" loading="lazy" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/12a.jpg" alt="Kỷ niệm 12" width="1013" height="1800" loading="lazy" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/13a.jpg" alt="Kỷ niệm 13" width="1800" height="939" loading="lazy" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/14a.jpg" alt="Kỷ niệm 14" width="1280" height="960" loading="lazy" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/15a.jpg" alt="Kỷ niệm 15" width="1620" height="1440" loading="lazy" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/16a.jpg" alt="Kỷ niệm 16" width="1350" height="1800" loading="lazy" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/17a.jpg" alt="Kỷ niệm 17" width="1502" height="1800" loading="lazy" decoding="async" /></div>
-            </div>
-            <div class="gallery-item">
-                <div class="content"><img src="./img/18a.jpg" alt="Kỷ niệm 18" width="1350" height="1800" loading="lazy" decoding="async" /></div>
-            </div>
+        <main class="gwrap">
+            <header class="ghead">
+                <p class="eyebrow">Những khoảnh khắc của chúng mình</p>
+                <h1 class="script">Ảnh kỷ niệm</h1>
+                <p class="count">18 khoảnh khắc. Bấm vào ảnh để xem lớn.</p>
+            </header>
+
+            <!-- 6. Thay tất cả bằng hình ảnh của bạn (nhớ ghi đúng width và height của ảnh để trang không bị giật) -->
+            <section class="masonry" id="gallery" aria-label="Thư viện ảnh">
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 1"><img src="./img/1a.jpg" alt="Kỷ niệm 1" width="1800" height="1648" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 2"><img src="./img/2a.jpg" alt="Kỷ niệm 2" width="1350" height="1800" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 3"><img src="./img/3a.jpg" alt="Kỷ niệm 3" width="1350" height="1800" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 4"><img src="./img/4a.jpg" alt="Kỷ niệm 4" width="1350" height="1800" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 5"><img src="./img/6a.jpg" alt="Kỷ niệm 5" width="1620" height="1440" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 6"><img src="./img/5a.jpg" alt="Kỷ niệm 6" width="1350" height="1800" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 7"><img src="./img/7a.jpg" alt="Kỷ niệm 7" width="1350" height="1800" loading="lazy" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 8"><img src="./img/8a.jpg" alt="Kỷ niệm 8" width="1013" height="1800" loading="lazy" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 9"><img src="./img/9a.jpg" alt="Kỷ niệm 9" width="1013" height="1800" loading="lazy" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 10"><img src="./img/10a.jpg" alt="Kỷ niệm 10" width="1350" height="1800" loading="lazy" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 11"><img src="./img/11a.jpg" alt="Kỷ niệm 11" width="1625" height="1800" loading="lazy" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 12"><img src="./img/12a.jpg" alt="Kỷ niệm 12" width="1013" height="1800" loading="lazy" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 13"><img src="./img/13a.jpg" alt="Kỷ niệm 13" width="1800" height="939" loading="lazy" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 14"><img src="./img/14a.jpg" alt="Kỷ niệm 14" width="1280" height="960" loading="lazy" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 15"><img src="./img/15a.jpg" alt="Kỷ niệm 15" width="1620" height="1440" loading="lazy" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 16"><img src="./img/16a.jpg" alt="Kỷ niệm 16" width="1350" height="1800" loading="lazy" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 17"><img src="./img/17a.jpg" alt="Kỷ niệm 17" width="1502" height="1800" loading="lazy" decoding="async" /></button>
+            </figure>
+            <figure class="shot">
+                <button type="button" class="shot-btn" aria-label="Xem ảnh 18"><img src="./img/18a.jpg" alt="Kỷ niệm 18" width="1350" height="1800" loading="lazy" decoding="async" /></button>
+            </figure>
+            </section>
+        </main>
+
+        <footer class="foot">Làm bằng cả trái tim, dành tặng vợ yêu</footer>
+
+        <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Xem ảnh">
+            <button type="button" class="lb-x" aria-label="Đóng">&times;</button>
+            <button type="button" class="lb-nav lb-prev" aria-label="Ảnh trước">&#8249;</button>
+            <img class="lb-img" alt="" />
+            <button type="button" class="lb-nav lb-next" aria-label="Ảnh sau">&#8250;</button>
+            <p class="lb-count"></p>
         </div>
 
         <!-- Phần nhạc -->

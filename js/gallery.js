@@ -1,53 +1,79 @@
-var gallery = document.querySelector('#gallery');
+/* Trang ảnh: bấm ảnh để xem lớn, chuyển ảnh bằng nút, phím mũi tên hoặc vuốt */
+(function () {
+    var shots = [].slice.call(document.querySelectorAll(".shot-btn"));
+    var lb = document.getElementById("lb");
+    var img = lb.querySelector(".lb-img");
+    var count = lb.querySelector(".lb-count");
+    var closeBtn = lb.querySelector(".lb-x");
+    var cur = 0;
+    var opener = null;
 
-var getVal = function (elem, style) {
-    return parseInt(window.getComputedStyle(elem).getPropertyValue(style));
-};
-var getHeight = function (item) {
-    return item.querySelector('.content').getBoundingClientRect().height;
-};
-
-// Tính số hàng mà mỗi ảnh chiếm trong lưới
-var resizeItem = function (item) {
-    var altura = getVal(gallery, 'grid-auto-rows');
-    var gap = getVal(gallery, 'grid-row-gap');
-    item.style.gridRowEnd = 'span ' + Math.ceil((getHeight(item) + gap) / (altura + gap));
-};
-var resizeAll = function () {
-    gallery.querySelectorAll('.gallery-item').forEach(resizeItem);
-};
-
-// Ảnh đã có width/height nên tính được chiều cao ngay, không cần chờ tải xong
-resizeAll();
-
-gallery.querySelectorAll('img').forEach(function (img) {
-    var item = img.parentElement.parentElement;
-    if (img.complete) {
-        resizeItem(item);
-        return;
+    function src(i) {
+        return shots[i].querySelector("img").getAttribute("src");
     }
-    img.classList.add('byebye'); // mờ đi cho tới khi ảnh tải xong
-    img.addEventListener('load', function () {
-        resizeItem(item);
-        img.classList.remove('byebye');
-    });
-});
-
-var resizeTimer;
-window.addEventListener('resize', function () {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(resizeAll, 100);
-});
-
-// Bấm vào ảnh để phóng to, bấm lại hoặc nhấn Esc để thu nhỏ
-gallery.querySelectorAll('.gallery-item').forEach(function (item) {
-    item.addEventListener('click', function () {
-        item.classList.toggle('full');
-    });
-});
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-        var open = gallery.querySelector('.full');
-        if (open) open.classList.remove('full');
+    function alt(i) {
+        return shots[i].querySelector("img").getAttribute("alt") || "";
     }
-});
+
+    function show(i) {
+        cur = (i + shots.length) % shots.length;
+        img.src = src(cur);
+        img.alt = alt(cur);
+        count.textContent = cur + 1 + " / " + shots.length;
+        // tải trước ảnh kế bên cho chuyển ảnh mượt
+        [cur - 1, cur + 1].forEach(function (n) {
+            new Image().src = src((n + shots.length) % shots.length);
+        });
+    }
+
+    function open(i, from) {
+        opener = from || null;
+        show(i);
+        lb.hidden = false;
+        document.body.style.overflow = "hidden";
+        closeBtn.focus();
+    }
+
+    function close() {
+        lb.hidden = true;
+        document.body.style.overflow = "";
+        if (opener) opener.focus();
+    }
+
+    shots.forEach(function (btn, i) {
+        btn.addEventListener("click", function () {
+            open(i, btn);
+        });
+    });
+
+    closeBtn.addEventListener("click", close);
+    lb.querySelector(".lb-prev").addEventListener("click", function () {
+        show(cur - 1);
+    });
+    lb.querySelector(".lb-next").addEventListener("click", function () {
+        show(cur + 1);
+    });
+    lb.addEventListener("click", function (e) {
+        if (e.target === lb) close();
+    });
+
+    document.addEventListener("keydown", function (e) {
+        if (lb.hidden) return;
+        if (e.key === "Escape") close();
+        else if (e.key === "ArrowLeft") show(cur - 1);
+        else if (e.key === "ArrowRight") show(cur + 1);
+    });
+
+    var startX = 0;
+    lb.addEventListener(
+        "touchstart",
+        function (e) {
+            startX = e.touches[0].clientX;
+        },
+        { passive: true }
+    );
+    lb.addEventListener("touchend", function (e) {
+        var dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1));
+    });
+})();

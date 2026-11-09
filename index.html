@@ -4,31 +4,60 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Chúc mừng sinh nhật em yêu" />
-        <meta name="theme-color" content="#314755" />
+        <meta name="theme-color" content="#ffe6f0" />
         <link rel="icon" type="image/png" href="./img/CILKGax.png" />
         <!-- 1. Tiêu đề của file index -->
         <title>Happy birthday my wife</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link rel="preload" as="image" href="./img/background.jpg" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Dancing+Script:wght@700&display=swap" />
         <link rel="stylesheet" href="./css/style.css" />
+        <link rel="stylesheet" href="./css/home.css" />
     </head>
-    <body class="page__main">
-        <div class="buttons">
-            <!-- Chữ ở menu bạn có thể sửa lại theo ý của bạn -->
-            <a href="index.html" class="btn btn-bir" aria-current="page">Chúc Mừng Sinh Nhật Em Yêu</a>
-            <a href="timeline.html" class="btn btn-timeline">Quà Tặng To Đùng</a>
-            <a href="gallery.html" class="btn btn-gallery">Ảnh kỷ niệm</a>
-        </div>
+    <body class="home">
+        <div class="sky" id="hearts" aria-hidden="true"></div>
 
-        <!-- 2. Phần ảnh của người bạn mún chúc -->
-        <img src="./img/avatar.jpg" alt="Người con gái anh yêu" class="cover" width="480" height="640" fetchpriority="high" />
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="Trang chủ">
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </a>
+            <!-- Chữ ở menu bạn có thể sửa lại theo ý của bạn -->
+            <nav class="menu" aria-label="Điều hướng">
+                <a href="index.html" aria-current="page">Chúc Mừng Sinh Nhật Em Yêu</a>
+                <a href="timeline.html">Quà Tặng To Đùng</a>
+                <a href="gallery.html">Ảnh kỷ niệm</a>
+            </nav>
+        </header>
+
+        <main class="hero">
+            <!-- 2. Phần ảnh của người bạn mún chúc -->
+            <div class="avatar">
+                <img src="./img/avatar.jpg" alt="Người con gái anh yêu" width="480" height="640" fetchpriority="high" />
+            </div>
+
+            <p class="eyebrow">Gửi người anh yêu nhất</p>
+            <h1 class="script">Chúc mừng sinh nhật<br />em yêu</h1>
+            <p class="lead">Hôm nay là ngày của em. Anh gói ghém vài điều nhỏ xíu ở đây, mong em cười thật nhiều.</p>
+
+            <section class="together" aria-label="Thời gian bên nhau">
+                <p class="together-label">Anh đã yêu em được</p>
+                <div class="units" id="clockHome"></div>
+            </section>
+
+            <div class="cta">
+                <a class="btn primary" href="timeline.html">Mở quà</a>
+                <a class="btn ghost" href="gallery.html">Xem ảnh kỷ niệm</a>
+            </div>
+        </main>
+
+        <footer class="foot">Làm bằng cả trái tim, dành tặng vợ yêu</footer>
 
         <!-- 3. Phần nhạc -->
         <audio id="player" autoplay loop preload="auto">
             <source src="./music/chucmungsinhnhat.mp3" type="audio/mpeg" />
         </audio>
+        <script src="./js/config.js"></script>
+        <script src="./js/home.js" defer></script>
         <script src="./js/music.js" defer></script>
     </body>
 </html>

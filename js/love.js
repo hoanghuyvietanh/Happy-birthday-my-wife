@@ -163,13 +163,13 @@
             ctx.scale(scale, scale);
             ctx.moveTo(0, 0);
     	    ctx.lineTo(15, 15);
-    	    ctx.lineTo(60, 15);
+    	    ctx.lineTo(78, 15);
             ctx.stroke();
 
             ctx.moveTo(0, 0);
             ctx.scale(0.75, 0.75);
-            ctx.font = "12px 微软雅黑,Verdana";
-            ctx.fillText("Come Baby", 23, 10);
+            ctx.font = "13px Verdana, sans-serif";
+            ctx.fillText("Chạm vào em", 23, 10);
             ctx.restore();
         },
         clear: function() {
