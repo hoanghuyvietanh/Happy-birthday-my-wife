@@ -1,0 +1,115 @@
+/* ===== Trang cây thời gian =====
+   Khung vẽ cây cố định 1100x680 nên không đổi kích thước ở đây. */
+body {
+    overflow: auto;
+}
+#main {
+    width: 100%;
+}
+#wrap {
+    position: relative;
+    margin: 0 auto;
+    width: 1100px;
+    height: 680px;
+    margin-top: 6px;
+}
+#text {
+    width: 440px;
+    height: 480px;
+    left: 60px;
+    top: 36px;
+    position: absolute;
+}
+#code {
+    display: none;
+    width: 460px;
+    font-family: var(--script);
+    font-weight: 700;
+    font-size: 21px;
+    line-height: 1.55;
+    color: #6b2350;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+#code .lines {
+    color: inherit;
+}
+#clock-box {
+    position: absolute;
+    left: 60px;
+    top: 532px;
+    display: none;
+}
+#clock-box .title {
+    display: block;
+    margin-bottom: 8px;
+    font-family: var(--script);
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--ink);
+}
+#clock .unit {
+    min-width: 84px;
+}
+#clock .unit b {
+    font-size: 2.1rem;
+}
+#canvas {
+    margin: 0 auto;
+    width: 1100px;
+    height: 680px;
+}
+#error {
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 60px;
+    display: none;
+}
+.hand {
+    cursor: pointer;
+}
+.space {
+    margin-right: 120px;
+}
+
+/* Ánh sáng quanh tán cây và bóng mềm dưới gốc, hiện ra khi cây nở xong */
+#wrap::before,
+#wrap::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 2.4s ease, transform 2.4s ease;
+}
+#wrap::before {
+    left: 440px;
+    top: -30px;
+    width: 720px;
+    height: 640px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(255, 112, 160, 0.5), rgba(255, 176, 102, 0.2) 55%, transparent 78%);
+    filter: blur(8px);
+    transform: scale(0.85);
+}
+#wrap::after {
+    left: 520px;
+    top: 650px;
+    width: 560px;
+    height: 36px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(150, 60, 100, 0.28), transparent);
+}
+#wrap.grown::before {
+    opacity: 1;
+    transform: none;
+    animation: breathe 5s ease-in-out 2.4s infinite;
+}
+#wrap.grown::after {
+    opacity: 1;
+}
+@keyframes breathe {
+    50% {
+        transform: scale(1.05);
+        opacity: 0.82;
+    }
+}

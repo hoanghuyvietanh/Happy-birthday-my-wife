@@ -1,146 +1,63 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#1b1736">
-    <title>Chúc mừng sinh nhật em yêu</title>
-    <meta name="description" content="Một món quà nhỏ dành cho em.">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Chúc mừng sinh nhật em yêu" />
+        <meta name="theme-color" content="#ffe6f0" />
+        <link rel="icon" type="image/png" href="./img/CILKGax.png" />
+        <!-- 1. Tiêu đề của file index -->
+        <title>Happy birthday my wife</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Dancing+Script:wght@700&display=swap" />
+        <link rel="stylesheet" href="./css/style.css" />
+        <link rel="stylesheet" href="./css/home.css" />
+    </head>
+    <body class="home">
+        <div class="sky" id="hearts" aria-hidden="true"></div>
 
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Chúc mừng sinh nhật em yêu">
-    <meta property="og:description" content="Có một món quà nhỏ dành cho em.">
-    <meta property="og:image" content="https://hoanghuyvietanh.github.io/Happy-birthday-my-wife/img/og.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta name="twitter:card" content="summary_large_image">
+        <header class="topbar">
+            <a class="brand" href="index.html" aria-label="Trang chủ">
+                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </a>
+            <!-- Chữ ở menu bạn có thể sửa lại theo ý của bạn -->
+            <nav class="menu" aria-label="Điều hướng">
+                <a href="index.html" aria-current="page">Chúc Mừng Sinh Nhật Em Yêu</a>
+                <a href="timeline.html">Quà Tặng To Đùng</a>
+                <a href="gallery.html">Ảnh kỷ niệm</a>
+            </nav>
+        </header>
 
-    <link rel="icon" type="image/png" href="img/favicon.png">
-    <link rel="preload" href="fonts/playwrite-vn-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="css/style.css">
-    <noscript><style>.seed{display:none}.stage-hint{display:none}.stage-title,.stage-cue{opacity:1}</style></noscript>
-</head>
-<body>
-
-<header class="topbar" id="topbar">
-    <nav class="topnav" id="topnav" aria-label="Điều hướng">
-        <a href="#loi-chuc">Lời chúc</a>
-        <a href="#anh">Ảnh kỷ niệm</a>
-    </nav>
-    <button class="music" id="music" type="button" aria-pressed="false" aria-label="Bật nhạc">
-        <svg class="ico-on" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="16.5" cy="16" r="2.5" fill="currentColor"/></svg>
-        <svg class="ico-off" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="16.5" cy="16" r="2.5" fill="currentColor"/><path d="M3 3l18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
-</header>
-
-<main>
-    <!-- 1. Màn mở đầu: cây tình yêu -->
-    <section class="stage" id="stage" aria-label="Món quà">
-        <div class="stars" aria-hidden="true"></div>
-        <canvas class="tree" id="tree" aria-hidden="true"></canvas>
-
-        <p class="stage-hint" id="hint">Có một món quà nhỏ dành cho em</p>
-        <h1 class="stage-title" id="title">Chúc mừng sinh nhật em yêu</h1>
-
-        <button class="seed" id="seed" type="button" aria-label="Chạm vào hạt giống để mở quà">
-            <svg viewBox="-34 -32 68 64" width="34" height="32" aria-hidden="true"><path d="M0 28C-8 20-32 6-32-9c0-15 19-21 32-6 13-15 32-9 32 6C32 6 8 20 0 28Z" fill="#ff7a96"/></svg>
-            <span class="seed-label">Chạm vào hạt giống</span>
-        </button>
-
-        <a class="stage-cue" id="cue" href="#loi-chuc">
-            Cuộn xuống để đọc lời chúc
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-    </section>
-
-    <!-- 2. Lời chúc + đồng hồ ngày yêu nhau -->
-    <section class="letter" id="loi-chuc">
-        <div class="letter-inner">
-            <figure class="portrait">
-                <img src="img/portrait.webp" width="960" height="1280" loading="lazy" decoding="async" alt="Em">
-            </figure>
-
-            <div class="letter-text">
-                <!-- Sửa lời chúc tại đây -->
-                <p class="opening">Chúc mừng sinh nhật người con gái anh yêu</p>
-
-                <p><span class="ln">Em có nhớ chúng ta yêu nhau được bao nhiêu ngày không?</span>
-                <span class="ln">Anh thì nhớ rất rõ đấy.</span></p>
-
-                <div class="together" id="together" aria-live="off">
-                    <p class="together-days">Chúng ta đã bên nhau <strong><span id="c-days">0</span> ngày</strong></p>
-                    <p class="together-parts">tức là
-                        <span><b id="c-y">0</b> năm</span>
-                        <span><b id="c-m">0</b> tháng</span>
-                        <span><b id="c-d">0</b> ngày</span>
-                        <span><b id="c-h">00</b> giờ</span>
-                        <span><b id="c-i">00</b> phút</span>
-                        <span><b id="c-s">00</b> giây</span>
-                    </p>
-                </div>
-
-                <p><span class="ln">Người ta nói bệnh nào cũng có thuốc chữa</span>
-                <span class="ln">Anh đã không tin điều đó nữa đến khi anh gặp em</span>
-                <span class="ln">Anh đã phát hiện ra anh đã mang một căn bệnh mà có lẽ,</span>
-                <span class="ln">Có lẽ sẽ không bao giờ có thuốc điều trị</span></p>
-
-                <p><span class="ln">Đó là căn bệnh hạnh phúc nhất mà anh may mắn được mắc phải</span>
-                <span class="ln">Đó là bệnh yêu em quá nhiều</span>
-                <span class="ln">Yêu em cho đến khi nào anh không còn tồn tại
-                <svg class="inline-heart" viewBox="-34 -32 68 64" width="22" height="20" aria-hidden="true"><path d="M0 28C-8 20-32 6-32-9c0-15 19-21 32-6 13-15 32-9 32 6C32 6 8 20 0 28Z" fill="currentColor"/></svg></span></p>
-
-                <p><span class="ln">Hãy cứ tin em nhé.</span>
-                <span class="ln">Chúc em sinh nhật vui vẻ.</span></p>
-
-                <p class="signature">Anh yêu Em</p>
+        <main class="hero">
+            <!-- 2. Phần ảnh của người bạn mún chúc -->
+            <div class="avatar">
+                <img src="./img/avatar.jpg" alt="Người con gái anh yêu" width="480" height="640" fetchpriority="high" />
             </div>
-        </div>
-    </section>
 
-    <!-- 3. Ảnh kỷ niệm (bấm vào ảnh để xem lớn) -->
-    <section class="gallery" id="anh">
-        <h2>Ảnh kỷ niệm</h2>
-        <div class="grid" id="grid">
-            <button class="shot" type="button" data-full="img/full/01.webp"><img src="img/thumb/01.webp" width="960" height="879" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 1"></button>
-            <button class="shot" type="button" data-full="img/full/02.webp"><img src="img/thumb/02.webp" width="720" height="960" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 2"></button>
-            <button class="shot" type="button" data-full="img/full/03.webp"><img src="img/thumb/03.webp" width="720" height="960" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 3"></button>
-            <button class="shot" type="button" data-full="img/full/04.webp"><img src="img/thumb/04.webp" width="720" height="960" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 4"></button>
-            <button class="shot" type="button" data-full="img/full/05.webp"><img src="img/thumb/05.webp" width="960" height="853" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 5"></button>
-            <button class="shot" type="button" data-full="img/full/06.webp"><img src="img/thumb/06.webp" width="720" height="960" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 6"></button>
-            <button class="shot" type="button" data-full="img/full/07.webp"><img src="img/thumb/07.webp" width="720" height="960" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 7"></button>
-            <button class="shot" type="button" data-full="img/full/08.webp"><img src="img/thumb/08.webp" width="540" height="960" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 8"></button>
-            <button class="shot" type="button" data-full="img/full/09.webp"><img src="img/thumb/09.webp" width="540" height="960" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 9"></button>
-            <button class="shot" type="button" data-full="img/full/10.webp"><img src="img/thumb/10.webp" width="720" height="960" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 10"></button>
-            <button class="shot" type="button" data-full="img/full/11.webp"><img src="img/thumb/11.webp" width="867" height="960" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 11"></button>
-            <button class="shot" type="button" data-full="img/full/12.webp"><img src="img/thumb/12.webp" width="540" height="960" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 12"></button>
-            <button class="shot" type="button" data-full="img/full/13.webp"><img src="img/thumb/13.webp" width="960" height="501" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 13"></button>
-            <button class="shot" type="button" data-full="img/full/14.webp"><img src="img/thumb/14.webp" width="960" height="720" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 14"></button>
-            <button class="shot" type="button" data-full="img/full/15.webp"><img src="img/thumb/15.webp" width="960" height="853" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 15"></button>
-            <button class="shot" type="button" data-full="img/full/16.webp"><img src="img/thumb/16.webp" width="720" height="960" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 16"></button>
-            <button class="shot" type="button" data-full="img/full/17.webp"><img src="img/thumb/17.webp" width="801" height="960" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 17"></button>
-            <button class="shot" type="button" data-full="img/full/18.webp"><img src="img/thumb/18.webp" width="720" height="960" loading="lazy" decoding="async" alt="Ảnh kỷ niệm 18"></button>
-        </div>
-    </section>
-</main>
+            <p class="eyebrow">Gửi người anh yêu nhất</p>
+            <h1 class="script">Chúc mừng sinh nhật<br />em yêu</h1>
+            <p class="lead">Hôm nay là ngày của em. Anh gói ghém vài điều nhỏ xíu ở đây, mong em cười thật nhiều.</p>
 
-<!-- Xem ảnh lớn -->
-<dialog class="lightbox" id="lightbox" aria-label="Xem ảnh">
-    <button class="lb-btn lb-close" id="lb-close" type="button" aria-label="Đóng">
-        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-    </button>
-    <button class="lb-btn lb-prev" id="lb-prev" type="button" aria-label="Ảnh trước">
-        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <button class="lb-btn lb-next" id="lb-next" type="button" aria-label="Ảnh sau">
-        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <img class="lb-img" id="lb-img" alt="">
-    <p class="lb-count" id="lb-count"></p>
-</dialog>
+            <section class="together" aria-label="Thời gian bên nhau">
+                <p class="together-label">Anh đã yêu em được</p>
+                <div class="units" id="clockHome"></div>
+            </section>
 
-<audio id="song" src="music/chuc-mung-sinh-nhat.mp3" loop preload="none"></audio>
+            <div class="cta">
+                <a class="btn primary" href="timeline.html">Mở quà</a>
+                <a class="btn ghost" href="gallery.html">Xem ảnh kỷ niệm</a>
+            </div>
+        </main>
 
-<script src="js/tree.js"></script>
-<script src="js/app.js"></script>
-</body>
+        <footer class="foot">Làm bằng cả trái tim, dành tặng vợ yêu</footer>
+
+        <!-- 3. Phần nhạc -->
+        <audio id="player" autoplay loop preload="auto">
+            <source src="./music/chucmungsinhnhat.mp3" type="audio/mpeg" />
+        </audio>
+        <script src="./js/config.js"></script>
+        <script src="./js/home.js" defer></script>
+        <script src="./js/music.js" defer></script>
+    </body>
 </html>
