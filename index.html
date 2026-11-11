@@ -24,8 +24,29 @@
 
     <style>
         html { scroll-behavior: smooth; }
-        .page-section { min-height: 100vh; padding-top: 80px; padding-bottom: 40px; }
         
+        /* CSS Ẩn/Hiện Tab */
+        .page-section { 
+            display: none; /* Ẩn tất cả các section mặc định */
+            min-height: 100vh; padding-top: 80px; padding-bottom: 40px; 
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .page-section.active {
+            display: block; /* Chỉ hiện section có class active */
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Menu đang chọn */
+        .menu a.active {
+            color: #ff4d85;
+            font-weight: bold;
+            border-bottom: 2px solid #ff4d85;
+        }
+
         #music-toggle {
             position: fixed; bottom: 20px; right: 20px; z-index: 9999;
             background: #ff4d85; color: white; border: none; border-radius: 50%;
@@ -39,7 +60,6 @@
         #random-note { margin-top: 15px; font-style: italic; color: #d6336c; font-weight: 600; min-height: 24px; }
         #wrap { position: relative; margin: 0 auto; width: 1100px; height: 680px; }
 
-        /* Style cho khu vực upload */
         .upload-area {
             max-width: 500px; margin: 0 auto 30px; padding: 20px;
             border: 2px dashed #ff85a2; border-radius: 15px;
@@ -66,19 +86,19 @@
     <div class="sky" id="hearts" aria-hidden="true"></div>
 
     <header class="topbar">
-        <a class="brand" href="#home" aria-label="Trang chủ">
+        <a class="brand" href="#home" onclick="switchTab('home'); return false;" aria-label="Trang chủ">
             <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
         </a>
         <nav class="menu" aria-label="Điều hướng">
-            <a href="#home">Lời Chúc</a>
-            <a href="#timeline">Thời Gian</a>
-            <a href="#gallery">Ảnh Kỷ Niệm</a>
-            <a href="#memory-box">Nhật Ký Tương Lai</a>
+            <a href="#home" class="tab-link active" onclick="switchTab('home'); return false;">Lời Chúc</a>
+            <a href="#timeline" class="tab-link" onclick="switchTab('timeline'); return false;">Thời Gian</a>
+            <a href="#gallery" class="tab-link" onclick="switchTab('gallery'); return false;">Ảnh Kỷ Niệm</a>
+            <a href="#memory-box" class="tab-link" onclick="switchTab('memory-box'); return false;">Nhật Ký</a>
         </nav>
     </header>
 
-    <!-- PHẦN 1: TRANG CHỦ -->
-    <main id="home" class="page-section hero">
+    <!-- PHẦN 1: TRANG CHỦ (Mặc định hiển thị) -->
+    <main id="home" class="page-section hero active">
         <div class="avatar">
             <img src="./img/avatar.jpg" alt="Vợ yêu của anh" width="480" height="640" fetchpriority="high" />
         </div>
@@ -94,6 +114,10 @@
         <div class="random-note-box">
             <button class="btn primary" onclick="showRandomNote()">Gửi em một bí mật 💌</button>
             <p id="random-note"></p>
+        </div>
+
+        <div class="cta" style="margin-top: 30px;">
+            <a class="btn ghost" href="#timeline" onclick="switchTab('timeline'); return false;">Mở quà nhé 🎁</a>
         </div>
     </main>
 
@@ -141,7 +165,7 @@
         </div>
     </section>
 
-    <!-- PHẦN 4: HỘP NHẬT KÝ TƯƠNG LAI (TẢI ẢNH LÊN) -->
+    <!-- PHẦN 4: HỘP NHẬT KÝ TƯƠNG LAI -->
     <section id="memory-box" class="page-section gwrap" style="background-color: #fff;">
         <header class="ghead">
             <p class="eyebrow">Cùng nhau viết tiếp câu chuyện</p>
@@ -157,9 +181,7 @@
             <button class="upload-btn" onclick="saveMemory()">📸 Lưu Kỷ Niệm</button>
         </div>
 
-        <div class="masonry" id="memory-board">
-            <!-- Ảnh tải lên sẽ hiển thị ở đây -->
-        </div>
+        <div class="masonry" id="memory-board"></div>
     </section>
 
     <footer class="foot">Làm bằng cả trái tim, dành tặng vợ yêu ❤️</footer>
@@ -172,7 +194,7 @@
         <p class="lb-count"></p>
     </div>
 
-    <!-- Nhạc nền & Nút nổi Đĩa than -->
+    <!-- Nhạc nền & Nút nổi -->
     <audio id="player" loop preload="auto">
         <source src="./music/chucmungsinhnhat.mp3" type="audio/mpeg" />
     </audio>
@@ -194,7 +216,29 @@
     <script src="./js/gallery.js" defer></script>
 
     <script>
-        // Bật tắt nhạc đĩa than
+        // HÀM CHUYỂN TAB 
+        function switchTab(tabId) {
+            // Ẩn tất cả các nội dung
+            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+            
+            // Xóa highlight ở tất cả menu
+            document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
+
+            // Hiển thị nội dung tương ứng
+            const targetSection = document.getElementById(tabId);
+            if (targetSection) targetSection.classList.add('active');
+
+            // Highlight menu đang chọn
+            const targetMenu = document.querySelector(`a[href="#${tabId}"].tab-link`);
+            if (targetMenu) targetMenu.classList.add('active');
+
+            // Chạy hiệu ứng vẽ cây nếu bấm vào phần Timeline
+            if (tabId === 'timeline' && typeof window.startTreeAnimation === 'function') {
+                window.startTreeAnimation();
+            }
+        }
+
+        // Bật tắt nhạc
         var audio = document.getElementById("player");
         var musicBtn = document.getElementById("music-toggle");
         function toggleMusic() {
@@ -220,28 +264,24 @@
             document.getElementById("random-note").innerText = loveNotes[randomIndex];
         }
 
-        // ==========================================
-        // TÍNH NĂNG TẢI ẢNH VÀ LƯU KỶ NIỆM (MỚI)
-        // ==========================================
+        // Chức năng upload nhật ký
         function saveMemory() {
             const year = document.getElementById('mem-year').value;
             const note = document.getElementById('mem-note').value;
             const fileInput = document.getElementById('mem-file');
 
             if (!year || !fileInput.files[0]) {
-                alert('Vợ ơi, nhập đủ năm và chọn ảnh nhé! ❤️');
-                return;
+                alert('Vợ ơi, nhập đủ năm và chọn ảnh nhé! ❤️'); return;
             }
 
             const file = fileInput.files[0];
             const reader = new FileReader();
 
             reader.onload = function(e) {
-                // Sử dụng Canvas để NÉN ảnh lại (Tránh lỗi đầy bộ nhớ trình duyệt)
                 const img = new Image();
                 img.onload = function() {
                     const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 600; // Giới hạn chiều rộng ảnh 600px
+                    const MAX_WIDTH = 600;
                     const scaleSize = MAX_WIDTH / img.width;
                     canvas.width = MAX_WIDTH;
                     canvas.height = img.height * scaleSize;
@@ -249,24 +289,20 @@
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                     
-                    // Chuyển ảnh đã nén thành chuỗi văn bản Base64
                     const base64Image = canvas.toDataURL('image/jpeg', 0.6); 
-
                     const newMem = { id: Date.now(), year: year, note: note, image: base64Image };
                     
-                    // Lưu vào LocalStorage
                     let memories = JSON.parse(localStorage.getItem('birthday_memories') || '[]');
                     memories.push(newMem);
-                    memories.sort((a, b) => b.year - a.year); // Sắp xếp năm mới nhất lên đầu
+                    memories.sort((a, b) => b.year - a.year);
                     localStorage.setItem('birthday_memories', JSON.stringify(memories));
                     
                     renderMemories();
                     
-                    // Làm sạch form
                     document.getElementById('mem-year').value = '';
                     document.getElementById('mem-note').value = '';
                     fileInput.value = '';
-                    alert("Đã lưu kỷ niệm thành công! Cuộn xuống để xem nhé.");
+                    alert("Đã lưu kỷ niệm thành công! Xem bên dưới nhé.");
                 };
                 img.src = e.target.result;
             };
@@ -298,14 +334,9 @@
                 renderMemories();
             }
         }
-
-        // Chạy load ảnh khi vừa mở trang
         window.addEventListener('DOMContentLoaded', renderMemories);
 
-
-        // ==========================================
-        // VẼ CÂY TÌNH YÊU
-        // ==========================================
+        // Vẽ cây tình yêu (Chỉ vẽ khi bấm vào Timeline)
         (function(){
             var canvas = $('#canvas');
             if (!canvas[0].getContext) return false;
@@ -368,11 +399,15 @@
                 $await(moveAnimate()); textAnimate().start(); $await(jumpAnimate());
             }));
 
-            // Vẽ cây khi cuộn tới
-            var observer = new IntersectionObserver(function(entries) {
-                if(entries[0].isIntersecting) { hold = 0; runAsync().start(); observer.disconnect(); }
-            });
-            observer.observe(document.getElementById('timeline'));
+            // Biến toàn cục để khởi chạy cây khi chuyển Tab
+            window.isTreeAnimated = false;
+            window.startTreeAnimation = function() {
+                if (!window.isTreeAnimated) {
+                    hold = 0; 
+                    runAsync().start(); 
+                    window.isTreeAnimated = true;
+                }
+            };
         })();
     </script>
 </body>
