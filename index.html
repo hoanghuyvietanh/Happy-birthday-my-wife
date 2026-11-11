@@ -1,63 +1,119 @@
 <!DOCTYPE html>
 <html lang="vi">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="Chúc mừng sinh nhật em yêu" />
-        <meta name="theme-color" content="#ffe6f0" />
-        <link rel="icon" type="image/png" href="./img/CILKGax.png" />
-        <!-- 1. Tiêu đề của file index -->
-        <title>Happy birthday my wife</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Dancing+Script:wght@700&display=swap" />
-        <link rel="stylesheet" href="./css/style.css" />
-        <link rel="stylesheet" href="./css/home.css" />
-    </head>
-    <body class="home">
-        <div class="sky" id="hearts" aria-hidden="true"></div>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kỷ niệm ngày cưới</title>
+<meta name="description" content="Hành trình kỷ niệm ngày cưới của chúng mình - mỗi năm một câu chuyện, mỗi năm thêm những bức ảnh mới.">
+<meta name="theme-color" content="#c0626e">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kỷ niệm ngày cưới">
+<meta property="og:description" content="Hành trình kỷ niệm ngày cưới của chúng mình.">
+<meta property="og:url" content="https://hoanghuyvietanh.github.io/Ky-niem-ngay-cuoi/">
+<meta property="og:image" content="https://hoanghuyvietanh.github.io/Ky-niem-ngay-cuoi/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9D%A4%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://res.cloudinary.com">
+<noscript><style>#intro{display:none!important}.io .reveal{opacity:1!important;translate:none!important}</style></noscript>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Be+Vietnam+Pro:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
-        <header class="topbar">
-            <a class="brand" href="index.html" aria-label="Trang chủ">
-                <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            </a>
-            <!-- Chữ ở menu bạn có thể sửa lại theo ý của bạn -->
-            <nav class="menu" aria-label="Điều hướng">
-                <a href="index.html" aria-current="page">Chúc Mừng Sinh Nhật Em Yêu</a>
-                <a href="timeline.html">Quà Tặng To Đùng</a>
-                <a href="gallery.html">Ảnh kỷ niệm</a>
-            </nav>
-        </header>
+<style>
+  :root{ --bg:#fbf6f1; --ink:#3b2a2a; --muted:#8a7470; --rose:#c0626e; --rose-soft:#f3dcdc; --gold:#b8935a; --card:#ffffff; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;transition:background 0.4s, color 0.4s;}
+  h1,h2,h3{font-family:'Playfair Display',serif;font-weight:500}
 
-        <main class="hero">
-            <!-- 2. Phần ảnh của người bạn mún chúc -->
-            <div class="avatar">
-                <img src="./img/avatar.jpg" alt="Người con gái anh yêu" width="480" height="640" fetchpriority="high" />
-            </div>
+  /* ===== HERO ===== */
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:48px 20px;position:relative;overflow:hidden;z-index:1;
+    background:radial-gradient(circle at 15% 20%,#f9e4e4 0,transparent 45%),radial-gradient(circle at 85% 85%,#f6ead6 0,transparent 45%)}
+  .hero .tag{letter-spacing:.35em;text-transform:uppercase;font-size:.75rem;color:var(--gold)}
+  .hero h1{font-size:clamp(2.6rem,9vw,5.5rem);margin:14px 0 6px;color:var(--ink)}
+  .hero h1 span{color:var(--rose);font-style:italic;font-weight:500}
+  .hero .date{color:var(--muted);font-size:1.05rem}
+  .counter{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:36px 0 14px}
+  .counter div{background:var(--card);border-radius:16px;padding:16px 18px;min-width:84px;box-shadow:0 6px 24px rgba(192,98,110,.12);transition:background 0.4s;}
+  .counter b{display:block;font-family:'Playfair Display',serif;font-size:2rem;color:var(--rose);font-weight:700}
+  .counter small{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.1em}
+  .days{color:var(--muted);font-size:.95rem}
+  .days strong{color:var(--rose)}
+  .scroll{margin-top:36px;color:var(--gold);text-decoration:none;font-size:.85rem;letter-spacing:.2em;text-transform:uppercase}
+  .heart{position:absolute;color:var(--rose);opacity:.25;animation:float linear infinite;user-select:none;z-index:-1}
+  @keyframes float{from{transform:translateY(105vh)}to{transform:translateY(-15vh)}}
 
-            <p class="eyebrow">Gửi người anh yêu nhất</p>
-            <h1 class="script">Chúc mừng sinh nhật<br />em yêu</h1>
-            <p class="lead">Hôm nay là ngày của em. Anh gói ghém vài điều nhỏ xíu ở đây, mong em cười thật nhiều.</p>
+  /* --- nền hero: ảnh thật mờ dần, chuyển cảnh chậm --- */
+  .hero-bg{position:absolute;inset:0;z-index:-1;background-size:cover;background-position:center;opacity:0;transform:scale(1);transition:opacity 2s ease-in-out,transform 8s linear}
+  .hero-bg.on{opacity:.2;transform:scale(1.08)}
+  /* --- hiện dần khi mở trang --- */
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  .rise{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes bob{50%{transform:translateY(6px)}}
+  .scroll span{display:inline-block;animation:bob 2s infinite}
+  /* --- tim nổ khi chạm --- */
+  .pop{position:fixed;pointer-events:none;z-index:900;color:var(--rose);animation:pop 1.4s ease-out forwards}
+  @keyframes pop{from{opacity:1;transform:translate(-50%,-50%) scale(.6)}to{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.2)}}
+  /* --- hiện dần khi cuộn tới --- */
+  .io .reveal{opacity:0;translate:0 36px;transition:opacity .8s ease,translate .8s cubic-bezier(.2,.7,.2,1)}
+  .io .reveal.in{opacity:1;translate:0 0}
+  /* --- gợi ý bật nhạc --- */
+  #musicHint{position:fixed;right:18px;bottom:136px;z-index:100;background:#fff;color:var(--ink);padding:8px 14px;border-radius:999px;font-size:.85rem;box-shadow:0 6px 20px rgba(59,42,42,.18);opacity:0;pointer-events:none;transform:translateY(6px);transition:opacity .4s,transform .4s}
+  #musicHint.show{opacity:1;transform:none}
+  /* --- thanh chọn năm --- */
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:34px}
+  .chips a{padding:6px 14px;border-radius:999px;background:var(--rose-soft);color:var(--rose);text-decoration:none;font-size:.88rem;transition:background .2s,color .2s}
+  .chips a:hover{background:var(--rose);color:#fff}
+  /* --- thông tin từng năm --- */
+  .meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .loc{display:inline-block;background:var(--gold);color:#fff;border-radius:999px;padding:2px 14px;font-size:.8rem}
+  .note{color:var(--muted);max-width:640px;margin:-4px 0 14px}
+  .letter{max-width:640px;margin-bottom:22px;background:rgba(255,255,255,.7);border-radius:12px;padding:10px 16px;transition:background 0.4s;}
+  .letter summary{cursor:pointer;color:var(--rose);font-weight:500;user-select:none}
+  .letter .content{margin-top:10px;padding-top:10px;border-top:1px dashed #e3c9c9;font-style:italic;white-space:pre-wrap}
+  @keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}45%{transform:scale(1.18)}}
+  .year::before{animation:beat 2.2s infinite}
 
-            <section class="together" aria-label="Thời gian bên nhau">
-                <p class="together-label">Anh đã yêu em được</p>
-                <div class="units" id="clockHome"></div>
-            </section>
+  #notice{display:none;max-width:700px;margin:0 auto;padding:12px 16px;background:#fff3cd;color:#664d03;border-radius:10px;font-size:.9rem;text-align:center}
 
-            <div class="cta">
-                <a class="btn primary" href="timeline.html">Mở quà</a>
-                <a class="btn ghost" href="gallery.html">Xem ảnh kỷ niệm</a>
-            </div>
-        </main>
+  /* ===== TIMELINE ===== */
+  main{max-width:1100px;margin:0 auto;padding:40px 18px 80px}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:30px}
+  .toolbar h2{font-size:1.8rem}
+  .year{position:relative;padding-left:34px;margin-bottom:64px;border-left:2px dashed #e3c9c9}
+  .year::before{content:"♥";position:absolute;left:-12px;top:0;width:22px;height:22px;border-radius:50%;background:var(--bg);color:var(--rose);font-size:18px;line-height:22px;text-align:center;transition:background 0.4s;}
+  .badge{display:inline-block;background:var(--rose);color:#fff;border-radius:999px;padding:2px 14px;font-size:.8rem;letter-spacing:.08em}
+  .year h3{font-size:2rem;margin:8px 0 14px}
+  .grid{columns:3 240px;column-gap:20px}
+  .ph{break-inside:avoid;margin-bottom:20px;background:var(--card);padding:12px 12px 60px;box-shadow:0 4px 16px rgba(59,42,42,.08);position:relative;border-radius:4px;cursor:zoom-in;
+    transition:transform .25s,box-shadow .25s,rotate .25s,opacity .8s ease calc(var(--d,0)*70ms),translate .8s cubic-bezier(.2,.7,.2,1) calc(var(--d,0)*70ms), background 0.4s}
+  .ph:nth-child(odd){rotate:-2deg}
+  .ph:nth-child(even){rotate:2deg}
+  .ph:hover,.ph:focus-visible{rotate:0deg;transform:translateY(-8px) scale(1.03);box-shadow:0 14px 34px rgba(59,42,42,.18);outline:none;z-index:2}
+  .ph img{width:100%;display:block;border-radius:2px}
+  .ph .cap{position:absolute;inset:auto 0 0 0;height:60px;display:flex;align-items:center;justify-content:center;padding:0 10px;text-align:center;font-family:'Caveat','Be Vietnam Pro',cursive;font-size:1.4rem;line-height:1.2}
+  .placeholder{aspect-ratio:4/5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px;text-align:center;background:linear-gradient(135deg,#f6e1e1,#f4ead7);color:var(--muted);font-size:.85rem}
+  .placeholder span{font-size:2rem}
+  .empty{padding:30px;border:2px dashed #e3c9c9;border-radius:14px;color:var(--muted);text-align:center}
+  footer{text-align:center;color:var(--muted);padding:30px 0 50px;font-size:.9rem}
+  #secret{cursor:default;padding:6px;user-select:none}
 
-        <footer class="foot">Làm bằng cả trái tim, dành tặng vợ yêu</footer>
+  /* ===== NÚT NỔI ===== */
+  .music-btn{position:fixed;bottom:20px;right:20px;z-index:100;width:48px;height:48px;border-radius:50%;background:var(--rose);color:#fff;border:none;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 12px rgba(192,98,110,.4)}
+  .music-btn.playing{animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(192,98,110,.7)}70%{box-shadow:0 0 0 15px rgba(192,98,110,0)}100%{box-shadow:0 0 0 0 rgba(192,98,110,0)}}
+  
+  .theme-btn { position: fixed; bottom: 78px; right: 20px; z-index: 100; width: 48px; height: 48px; border-radius: 50%; background: var(--card); color: var(--ink); border: none; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,.15); transition: transform 0.3s, background 0.4s, color 0.4s; display:flex; align-items:center; justify-content:center; }
+  .theme-btn:hover { transform: scale(1.1); }
 
-        <!-- 3. Phần nhạc -->
-        <audio id="player" autoplay loop preload="auto">
-            <source src="./music/chucmungsinhnhat.mp3" type="audio/mpeg" />
-        </audio>
-        <script src="./js/config.js"></script>
-        <script src="./js/home.js" defer></script>
-        <script src="./js/music.js" defer></script>
-    </body>
-</html>
+  /* ===== ĐẾM NGƯỢC + CHẠM ĐỂ NỔ TIM ===== */
+  .next{color:var(--muted);font-size:.95rem;margin-top:6px}
+  .next strong{color:var(--rose)}
+  .note{white-space:pre-wrap}
+  #names,.counter{cursor:pointer}
+
+  /* ===== MÀN HÌNH MỞ THI
