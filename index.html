@@ -17,6 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Dancing+Script:wght@700&display=swap" />
     
+    <!-- Link CSS gốc -->
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/home.css" />
     <link rel="stylesheet" href="./css/default.css" />
@@ -24,10 +25,9 @@
 
     <style>
         /* =========================================
-           SỬA LỖI GIAO DIỆN (GHI ĐÈ CSS CŨ)
+           SỬA LỖI LỆCH GIAO DIỆN (CĂN GIỮA TUYỆT ĐỐI)
            ========================================= */
         
-        /* 1. Khóa body để không bị cuộn ngang, set nền chung */
         body, html { 
             margin: 0; padding: 0; 
             width: 100%; height: 100%; 
@@ -36,7 +36,6 @@
             font-family: 'Be Vietnam Pro', sans-serif;
         }
         
-        /* 2. Ép tất cả các Tab phải full 100% màn hình, sửa lỗi thanh cuộn nằm giữa */
         .page-section { 
             display: none; 
             position: absolute;
@@ -44,28 +43,64 @@
             width: 100vw !important; 
             max-width: 100% !important;
             height: 100vh;
-            padding-top: 80px; 
             box-sizing: border-box !important;
             animation: fadeIn 0.4s ease-in-out;
-            background: transparent !important; /* Dùng nền của body */
+            background: transparent !important; 
         }
         
-        /* 3. Tối ưu Tab Lời Chúc (Căn giữa tuyệt đối) */
+        /* -----------------------------------------
+           SỬA LỖI TAB LỜI CHÚC (AVATAR + NÚT BẤM)
+           ----------------------------------------- */
         .page-section.active#home {
             display: flex !important;
             flex-direction: column !important;
-            justify-content: center !important;
+            justify-content: flex-start !important; /* Đẩy từ trên xuống thay vì ép giữa */
             align-items: center !important;
             text-align: center !important;
+            overflow-y: auto !important; /* CHO PHÉP CUỘN để không bị mất nút bấm */
+            overflow-x: hidden !important;
+            padding-top: 100px !important; /* Dịch xuống khỏi menu */
+            padding-bottom: 120px !important; /* Chừa chỗ trống bên dưới */
         }
-        #home .avatar { margin: 0 auto 20px !important; display: flex; justify-content: center; }
+
+        /* Hủy bỏ mọi margin/padding lệch từ CSS cũ */
+        #home > * {
+            margin-left: auto !important;
+            margin-right: auto !important;
+            transform: none !important;
+            left: auto !important;
+            right: auto !important;
+        }
+
+        /* Chỉnh lại Avatar và Vòng tròn hồng để không bị lệch */
+        #home .avatar { 
+            position: relative !important;
+            display: flex !important; 
+            justify-content: center !important;
+            align-items: center !important;
+            margin: 0 auto 20px !important; 
+            width: 180px !important; 
+            height: 180px !important;
+        }
         #home .avatar img { 
-            max-height: 25vh; width: auto; object-fit: cover; 
-            border-radius: 50%; box-shadow: 0 10px 20px rgba(255, 77, 133, 0.3);
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            border-radius: 50% !important; 
+            box-shadow: 0 10px 20px rgba(255, 77, 133, 0.3) !important;
+            position: relative !important;
+            z-index: 2 !important;
         }
-        #home p, #home h1, #home .together { margin-left: auto !important; margin-right: auto !important; text-align: center; }
-        
-        /* 4. Tab Thời Gian */
+        /* Ép vòng tròn trang trí của file home.css vào chính giữa */
+        #home .avatar::before, #home .avatar::after {
+            left: 50% !important;
+            top: 50% !important;
+            transform: translate(-50%, -50%) !important;
+        }
+
+        /* -----------------------------------------
+           CÁC TAB CÒN LẠI 
+           ----------------------------------------- */
         .page-section.active#timeline {
             display: flex !important;
             flex-direction: column !important;
@@ -75,7 +110,6 @@
         }
         #wrap { position: relative; margin: 0 auto; width: 1100px; height: 680px; }
 
-        /* 5. Tab Ảnh Kỷ Niệm & Nhật Ký (Full width, cuộn dọc mượt mà) */
         .page-section.active#gallery, 
         .page-section.active#memory-box {
             display: flex !important;
@@ -83,11 +117,11 @@
             align-items: center !important;
             overflow-y: auto !important;
             overflow-x: hidden !important;
+            padding-top: 100px !important;
             padding-bottom: 120px !important;
         }
         .ghead { text-align: center; width: 100%; margin-bottom: 30px; }
         
-        /* Sửa lỗi layout lưới ảnh (Đẹp và bung đều 2 bên) */
         .masonry {
             display: grid !important;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
@@ -104,7 +138,6 @@
         }
         .masonry .shot img:hover { transform: translateY(-5px); }
 
-        /* Sửa form Nhật ký */
         .upload-area {
             width: 90%; max-width: 500px; margin: 0 auto 40px; padding: 25px;
             border: 2px dashed #ff85a2; border-radius: 15px;
@@ -131,10 +164,11 @@
         .del-btn { background: #fff0f5; border: 1px solid #ffb3c6; padding: 8px 15px; border-radius: 20px; color: #ff4d85; cursor: pointer; font-size: 13px; margin-top: 15px;}
         .del-btn:hover { background: #ff4d85; color: #fff; }
 
-        /* Animation & Misc */
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .menu a.active { color: #ff4d85; font-weight: bold; border-bottom: 2px solid #ff4d85; }
-        .random-note-box { margin-top: 20px; text-align: center; }
+        
+        /* Căn giữa nút random */
+        .random-note-box { margin: 20px auto 0 !important; text-align: center !important; }
         #random-note { margin-top: 15px; font-style: italic; color: #d6336c; font-weight: 600; min-height: 24px; }
         
         #music-toggle {
@@ -150,340 +184,7 @@
 <body>
     <div class="sky" id="hearts" aria-hidden="true"></div>
 
+    <!-- MENU -->
     <header class="topbar" style="position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(255,255,255,0.9); backdrop-filter: blur(5px);">
         <a class="brand" href="#home" onclick="switchTab('home'); return false;" aria-label="Trang chủ">
-            <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-        </a>
-        <nav class="menu" aria-label="Điều hướng">
-            <a href="#home" class="tab-link active" onclick="switchTab('home'); return false;">Lời Chúc</a>
-            <a href="#timeline" class="tab-link" onclick="switchTab('timeline'); return false;">Thời Gian</a>
-            <a href="#gallery" class="tab-link" onclick="switchTab('gallery'); return false;">Ảnh Kỷ Niệm</a>
-            <a href="#memory-box" class="tab-link" onclick="switchTab('memory-box'); return false;">Nhật Ký</a>
-        </nav>
-    </header>
-
-    <!-- PHẦN 1: TRANG CHỦ -->
-    <main id="home" class="page-section hero active">
-        <div class="avatar">
-            <img src="./img/avatar.jpg" alt="Vợ yêu của anh" />
-        </div>
-        <p class="eyebrow">Gửi người anh yêu nhất</p>
-        <h1 class="script">Chúc mừng sinh nhật<br />em yêu</h1>
-        <p class="lead">Hôm nay là ngày của em. Anh gói ghém vài điều nhỏ xíu ở đây, mong em cười thật nhiều.</p>
-        
-        <section class="together" aria-label="Thời gian bên nhau">
-            <p class="together-label">Anh đã yêu em được</p>
-            <div class="units" id="clockHome"></div>
-        </section>
-
-        <div class="random-note-box">
-            <button class="btn primary" onclick="showRandomNote()" style="border-radius: 20px;">Gửi em một bí mật 💌</button>
-            <p id="random-note"></p>
-        </div>
-    </main>
-
-    <!-- PHẦN 2: TIMELINE CÂY TÌNH YÊU -->
-    <section id="timeline" class="page-section">
-        <div id="wrap">
-            <div id="text">
-                <div id="code">
-                    <span class="lines">
-                        <span class="say">Chúc mừng sinh nhật người con gái anh yêu</span><br>
-                        <span class="say">Em có nhớ chúng ta yêu nhau được bao nhiêu ngày không?</span><br>
-                        <span class="say">Anh thì nhớ rất rõ đấy.</span><br>
-                        <span class="say"> </span><br>
-                        <span class="say">Người ta nói bệnh nào cũng có thuốc chữa</span><br>
-                        <span class="say">Anh đã không tin điều đó nữa đến khi anh gặp em</span><br>
-                        <span class="say">Đó là căn bệnh hạnh phúc nhất mà anh may mắn được mắc phải</span><br>
-                        <span class="say">Đó là bệnh yêu em quá nhiều</span><br>
-                        <span class="say">Yêu em cho đến khi nào anh không còn tồn tại &lt;3</span><br>
-                        <span class="say">Chúc em sinh nhật vui vẻ.</span><br>
-                        <span class="say"> </span><br>
-                        <span class="say"><span class="space"></span> -- Anh yêu Em --</span>
-                    </span>
-                </div>
-            </div>
-            <div id="clock-box">
-                <span class="title">Thời gian anh đã yêu em</span>
-                <div id="clock" class="units"></div>
-            </div>
-            <canvas id="canvas" width="1100" height="680" style="cursor: pointer;"></canvas>
-        </div>
-    </section>
-
-    <!-- PHẦN 3: THƯ VIỆN ẢNH -->
-    <section id="gallery" class="page-section gwrap">
-        <header class="ghead">
-            <p class="eyebrow">Những khoảnh khắc của chúng mình</p>
-            <h1 class="script">Ảnh kỷ niệm</h1>
-        </header>
-        <div class="masonry" aria-label="Thư viện ảnh">
-            <figure class="shot"><button type="button" class="shot-btn"><img src="./img/1a.jpg" alt="Kỷ niệm 1" loading="lazy" /></button></figure>
-            <figure class="shot"><button type="button" class="shot-btn"><img src="./img/2a.jpg" alt="Kỷ niệm 2" loading="lazy" /></button></figure>
-            <figure class="shot"><button type="button" class="shot-btn"><img src="./img/3a.jpg" alt="Kỷ niệm 3" loading="lazy" /></button></figure>
-            <figure class="shot"><button type="button" class="shot-btn"><img src="./img/4a.jpg" alt="Kỷ niệm 4" loading="lazy" /></button></figure>
-            <figure class="shot"><button type="button" class="shot-btn"><img src="./img/5a.jpg" alt="Kỷ niệm 5" loading="lazy" /></button></figure>
-            <figure class="shot"><button type="button" class="shot-btn"><img src="./img/6a.jpg" alt="Kỷ niệm 6" loading="lazy" /></button></figure>
-        </div>
-        <footer class="foot" style="margin-top: 50px; text-align: center; width: 100%;">Làm bằng cả trái tim, dành tặng vợ yêu ❤️</footer>
-    </section>
-
-    <!-- PHẦN 4: HỘP NHẬT KÝ -->
-    <section id="memory-box" class="page-section gwrap">
-        <header class="ghead">
-            <p class="eyebrow">Cùng nhau viết tiếp câu chuyện</p>
-            <h1 class="script">Nhật Ký Tương Lai</h1>
-            <p class="count" style="margin-bottom: 20px;">Mỗi năm sinh nhật hãy tải lên 1 bức ảnh mới để lưu giữ nhé vợ.</p>
-        </header>
-
-        <div class="upload-area">
-            <input type="number" id="mem-year" placeholder="Sinh nhật năm (VD: 2024)">
-            <input type="text" id="mem-note" placeholder="Vài lời nhắn nhủ (VD: Yêu anh nhất đời)...">
-            <input type="file" id="mem-file" accept="image/*" style="padding: 5px; background: white;">
-            <button class="upload-btn" onclick="saveMemory()">📸 Lưu Kỷ Niệm Mới</button>
-        </div>
-
-        <div class="masonry" id="memory-board"></div>
-        <footer class="foot" style="margin-top: 50px; text-align: center; width: 100%;">Làm bằng cả trái tim, dành tặng vợ yêu ❤️</footer>
-    </section>
-
-    <!-- Lớp phủ xem ảnh to -->
-    <div class="lb" id="lb" hidden role="dialog" aria-modal="true">
-        <button type="button" class="lb-x" aria-label="Đóng">&times;</button>
-        <button type="button" class="lb-nav lb-prev">&#8249;</button>
-        <img class="lb-img" alt="" />
-        <button type="button" class="lb-nav lb-next">&#8250;</button>
-        <p class="lb-count"></p>
-    </div>
-
-    <!-- Nhạc nền & Nút nổi -->
-    <audio id="player" loop preload="auto">
-        <source src="./music/chucmungsinhnhat.mp3" type="audio/mpeg" />
-    </audio>
-    <button id="music-toggle" aria-label="Bật/Tắt Nhạc" onclick="toggleMusic()">💿</button>
-
-    <!-- CÁC THƯ VIỆN & SCRIPT -->
-    <script src="./js/jquery.min.js"></script>
-    <script src="./js/jscex.min.js"></script>
-    <script src="./js/jscex-parser.js"></script>
-    <script src="./js/jscex-jit.js"></script>
-    <script src="./js/jscex-builderbase.min.js"></script>
-    <script src="./js/jscex-async.min.js"></script>
-    <script src="./js/jscex-async-powerpack.min.js"></script>
-    <script src="./js/config.js"></script>
-    <script src="./js/functions.js" charset="utf-8"></script>
-    <script src="./js/love.js" charset="utf-8"></script>
-    
-    <script src="./js/home.js" defer></script>
-    <script src="./js/gallery.js" defer></script>
-
-    <script>
-        // HÀM TỰ ĐỘNG THU PHÓNG KHUNG CÂY TÌNH YÊU ĐỂ VỪA KHÍT MÀN HÌNH
-        function scaleTimeline() {
-            const wrap = document.getElementById('wrap');
-            const container = document.getElementById('timeline');
-            if (!wrap || !container) return;
-            
-            const cWidth = container.clientWidth;
-            const cHeight = container.clientHeight - 80; 
-            
-            const scaleX = cWidth / 1100;
-            const scaleY = cHeight / 680;
-            const scale = Math.min(scaleX, scaleY) * 0.95; 
-            
-            wrap.style.transform = `scale(${scale})`;
-            wrap.style.transformOrigin = 'center center';
-        }
-        window.addEventListener('resize', scaleTimeline);
-
-        // HÀM CHUYỂN TAB 
-        function switchTab(tabId) {
-            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
-
-            const targetSection = document.getElementById(tabId);
-            if (targetSection) targetSection.classList.add('active');
-
-            const targetMenu = document.querySelector(`a[href="#${tabId}"].tab-link`);
-            if (targetMenu) targetMenu.classList.add('active');
-
-            if (tabId === 'timeline') {
-                scaleTimeline(); 
-                if (typeof window.startTreeAnimation === 'function') {
-                    window.startTreeAnimation();
-                }
-            }
-        }
-
-        // Bật tắt nhạc
-        var audio = document.getElementById("player");
-        var musicBtn = document.getElementById("music-toggle");
-        function toggleMusic() {
-            if (audio.paused) {
-                audio.play(); musicBtn.classList.add("spinning");
-            } else {
-                audio.pause(); musicBtn.classList.remove("spinning");
-            }
-        }
-        window.addEventListener('click', function() {
-            if (audio.paused) { audio.play(); musicBtn.classList.add("spinning"); }
-        }, { once: true });
-
-        // Lời yêu thương
-        const loveNotes = [
-            "Cảm ơn em vì đã đến bên đời anh.",
-            "Nụ cười của em là món quà lớn nhất.",
-            "Yêu em hôm nay và mãi mãi về sau.",
-            "Chúc vợ tuổi mới luôn xinh đẹp và bình an.",
-            "Chỉ cần nhìn thấy em, mọi mệt mỏi đều tan biến."
-        ];
-        function showRandomNote() {
-            const randomIndex = Math.floor(Math.random() * loveNotes.length);
-            document.getElementById("random-note").innerText = loveNotes[randomIndex];
-        }
-
-        // Chức năng upload nhật ký
-        function saveMemory() {
-            const year = document.getElementById('mem-year').value;
-            const note = document.getElementById('mem-note').value;
-            const fileInput = document.getElementById('mem-file');
-
-            if (!year || !fileInput.files[0]) {
-                alert('Vợ ơi, nhập đủ năm và chọn ảnh nhé! ❤️'); return;
-            }
-
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 600;
-                    const scaleSize = MAX_WIDTH / img.width;
-                    canvas.width = MAX_WIDTH;
-                    canvas.height = img.height * scaleSize;
-                    
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    
-                    const base64Image = canvas.toDataURL('image/jpeg', 0.6); 
-                    const newMem = { id: Date.now(), year: year, note: note, image: base64Image };
-                    
-                    let memories = JSON.parse(localStorage.getItem('birthday_memories') || '[]');
-                    memories.push(newMem);
-                    memories.sort((a, b) => b.year - a.year);
-                    localStorage.setItem('birthday_memories', JSON.stringify(memories));
-                    
-                    renderMemories();
-                    
-                    document.getElementById('mem-year').value = '';
-                    document.getElementById('mem-note').value = '';
-                    fileInput.value = '';
-                    alert("Đã lưu kỷ niệm thành công! Kéo xuống để xem nhé.");
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function renderMemories() {
-            const board = document.getElementById('memory-board');
-            let memories = JSON.parse(localStorage.getItem('birthday_memories') || '[]');
-            
-            board.innerHTML = '';
-            memories.forEach((mem) => {
-                board.innerHTML += `
-                    <div class="mem-card" id="mem-${mem.id}">
-                        <img src="${mem.image}" alt="Kỷ niệm ${mem.year}" />
-                        <h3>Sinh nhật năm ${mem.year}</h3>
-                        <p>"${mem.note}"</p>
-                        <button class="del-btn" onclick="deleteMemory(${mem.id})">Xóa kỷ niệm này</button>
-                    </div>
-                `;
-            });
-        }
-
-        function deleteMemory(id) {
-            if(confirm('Em có chắc muốn xóa bức ảnh này không?')) {
-                let memories = JSON.parse(localStorage.getItem('birthday_memories') || '[]');
-                memories = memories.filter(m => m.id !== id);
-                localStorage.setItem('birthday_memories', JSON.stringify(memories));
-                renderMemories();
-            }
-        }
-        window.addEventListener('DOMContentLoaded', renderMemories);
-
-        // Vẽ cây tình yêu
-        (function(){
-            var canvas = $('#canvas');
-            if (!canvas[0].getContext) return false;
-            var width = canvas.width(), height = canvas.height();
-            canvas.attr("width", width).attr("height", height);
-            
-            var opts = {
-                seed: { x: width / 2 - 20, color: "rgb(232, 51, 111)", scale: 2 },
-                branch: [
-                    [535, 680, 570, 250, 500, 200, 30, 100, [
-                        [540, 500, 455, 417, 340, 400, 13, 100, [ [450, 435, 434, 430, 394, 395, 2, 40] ]],
-                        [550, 445, 600, 356, 680, 345, 12, 100, [ [578, 400, 648, 409, 661, 426, 3, 80] ]],
-                        [539, 281, 537, 248, 534, 217, 3, 40],
-                        [546, 397, 413, 247, 328, 244, 9, 80, [
-                            [427, 286, 383, 253, 371, 205, 2, 40],
-                            [498, 345, 435, 315, 395, 330, 4, 60]
-                        ]],
-                        [546, 357, 608, 252, 678, 221, 6, 100, [ [590, 293, 646, 277, 648, 271, 2, 80] ]]
-                    ]]
-                ],
-                bloom: { num: 900, width: 1080, height: 650 },
-                footer: { width: 1200, height: 5, speed: 10 }
-            }
-            var tree = new Tree(canvas[0], width, height, opts);
-            var seed = tree.seed; var foot = tree.footer; var hold = 1;
-
-            var seedAnimate = eval(Jscex.compile("async", function () {
-                seed.draw();
-                while (hold) { seed.pulse(); $await(Jscex.Async.sleep(30)); }
-                while (seed.canScale()) { seed.scale(0.95); $await(Jscex.Async.sleep(10)); }
-                while (seed.canMove()) { seed.move(0, 2); foot.draw(); $await(Jscex.Async.sleep(10)); }
-            }));
-            var growAnimate = eval(Jscex.compile("async", function () {
-                do { tree.grow(); $await(Jscex.Async.sleep(10)); } while (tree.canGrow());
-            }));
-            var flowAnimate = eval(Jscex.compile("async", function () {
-                do { tree.flower(3); $await(Jscex.Async.sleep(10)); } while (tree.canFlower());
-            }));
-            var moveAnimate = eval(Jscex.compile("async", function () {
-                tree.snapshot("p1", 240, 0, 610, 680);
-                while (tree.move("p1", 500, 0)) { foot.draw(); $await(Jscex.Async.sleep(10)); }
-                foot.draw(); tree.snapshot("p2", 500, 0, 610, 680);
-                canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")").addClass("grown");
-                canvas.css("background", "rgba(255, 255, 255, 0.55)");
-                $await(Jscex.Async.sleep(300)); canvas.css("background", "none");
-            }));
-            var jumpAnimate = eval(Jscex.compile("async", function () {
-                while (true) {
-                    tree.ctx.clearRect(0, 0, width, height); tree.jump(); foot.draw();
-                    $await(Jscex.Async.sleep(25));
-                }
-            }));
-            var textAnimate = eval(Jscex.compile("async", function () {
-                var together = LOVE_START; 
-                $("#code").show().typewriter(); $("#clock-box").fadeIn(500);
-                while (true) { timeElapse(together); $await(Jscex.Async.sleep(1000)); }
-            }));
-            var runAsync = eval(Jscex.compile("async", function () {
-                $await(seedAnimate()); $await(growAnimate()); $await(flowAnimate());
-                $await(moveAnimate()); textAnimate().start(); $await(jumpAnimate());
-            }));
-
-            window.isTreeAnimated = false;
-            window.startTreeAnimation = function() {
-                if (!window.isTreeAnimated) {
-                    hold = 0; runAsync().start(); window.isTreeAnimated = true;
-                }
-            };
-        })();
-    </script>
-</body>
-</html>
+            <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.
