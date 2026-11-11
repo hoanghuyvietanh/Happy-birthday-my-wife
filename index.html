@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="Chúc mừng sinh nhật em yêu" />
     <meta name="theme-color" content="#ffe6f0" />
     
@@ -23,16 +23,49 @@
     <link rel="stylesheet" href="./css/gallery.css" />
 
     <style>
-        html { scroll-behavior: smooth; }
+        /* Khóa cuộn của toàn bộ trình duyệt */
+        body, html { 
+            margin: 0; padding: 0; 
+            width: 100vw; height: 100vh; 
+            overflow: hidden; /* Cấm cuộn ở cấp độ body */
+            background-color: #fff9fb;
+        }
         
-        /* CSS Ẩn/Hiện Tab */
+        /* Cấu hình chung cho mọi tab: Cố định kích thước bằng đúng màn hình */
         .page-section { 
-            display: none; /* Ẩn tất cả các section mặc định */
-            min-height: 100vh; padding-top: 80px; padding-bottom: 40px; 
+            display: none; 
+            position: absolute;
+            top: 0; left: 0; 
+            width: 100vw; height: 100vh;
+            padding-top: 60px; /* Chừa chỗ cho menu */
+            box-sizing: border-box;
             animation: fadeIn 0.5s ease-in-out;
         }
-        .page-section.active {
-            display: block; /* Chỉ hiện section có class active */
+
+        /* 1. Lời Chúc & Thời Gian: Nằm TRỌN VẸN 1 khung hình, CẤM CUỘN */
+        .page-section.active#home, 
+        .page-section.active#timeline {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Tối ưu ảnh Avatar để không bị tràn trên màn hình điện thoại nhỏ */
+        #home .avatar img { max-height: 25vh; width: auto; object-fit: cover; }
+        #home h1.script { font-size: clamp(2rem, 5vh, 4rem); margin: 10px 0; }
+        #home p.lead { max-width: 90%; margin: 0 auto 15px; }
+
+        /* Khung wrap của cây tình yêu */
+        #wrap { position: relative; margin: 0 auto; width: 1100px; height: 680px; }
+
+        /* 2. Ảnh Kỷ Niệm & Nhật Ký: CHO PHÉP CUỘN dọc */
+        .page-section.active#gallery, 
+        .page-section.active#memory-box {
+            display: block;
+            overflow-y: auto; /* Chỉ cho phép cuộn bên trong tab này */
+            padding-bottom: 100px; /* Không bị che bởi nút nhạc */
         }
         
         @keyframes fadeIn {
@@ -40,12 +73,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Menu đang chọn */
-        .menu a.active {
-            color: #ff4d85;
-            font-weight: bold;
-            border-bottom: 2px solid #ff4d85;
-        }
+        .menu a.active { color: #ff4d85; font-weight: bold; border-bottom: 2px solid #ff4d85; }
 
         #music-toggle {
             position: fixed; bottom: 20px; right: 20px; z-index: 9999;
@@ -58,7 +86,6 @@
 
         .random-note-box { margin-top: 20px; text-align: center; }
         #random-note { margin-top: 15px; font-style: italic; color: #d6336c; font-weight: 600; min-height: 24px; }
-        #wrap { position: relative; margin: 0 auto; width: 1100px; height: 680px; }
 
         .upload-area {
             max-width: 500px; margin: 0 auto 30px; padding: 20px;
@@ -74,7 +101,6 @@
             background: #ff4d85; color: white; border: none; padding: 10px 20px;
             border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: 10px;
         }
-        .upload-btn:hover { background: #d6336c; }
         .mem-card { background: white; padding: 10px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
         .mem-card img { width: 100%; border-radius: 8px; }
         .mem-card h3 { font-family: 'Dancing Script', cursive; font-size: 28px; color: #ff4d85; margin: 10px 0 5px; }
@@ -82,10 +108,10 @@
         .del-btn { background: #f1f1f1; border: none; padding: 5px 10px; border-radius: 5px; color: #888; cursor: pointer; font-size: 12px; margin-top: 10px;}
     </style>
 </head>
-<body class="home">
+<body>
     <div class="sky" id="hearts" aria-hidden="true"></div>
 
-    <header class="topbar">
+    <header class="topbar" style="position: fixed; top: 0; width: 100%; z-index: 100;">
         <a class="brand" href="#home" onclick="switchTab('home'); return false;" aria-label="Trang chủ">
             <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
         </a>
@@ -97,7 +123,7 @@
         </nav>
     </header>
 
-    <!-- PHẦN 1: TRANG CHỦ (Mặc định hiển thị) -->
+    <!-- PHẦN 1: TRANG CHỦ (TRỌN VẸN 1 KHUNG HÌNH) -->
     <main id="home" class="page-section hero active">
         <div class="avatar">
             <img src="./img/avatar.jpg" alt="Vợ yêu của anh" width="480" height="640" fetchpriority="high" />
@@ -115,44 +141,38 @@
             <button class="btn primary" onclick="showRandomNote()">Gửi em một bí mật 💌</button>
             <p id="random-note"></p>
         </div>
-
-        <div class="cta" style="margin-top: 30px;">
-            <a class="btn ghost" href="#timeline" onclick="switchTab('timeline'); return false;">Mở quà nhé 🎁</a>
-        </div>
     </main>
 
-    <!-- PHẦN 2: TIMELINE CÂY TÌNH YÊU -->
-    <section id="timeline" class="page-section" style="background-color: #ffe6f0; overflow-x: auto;">
-        <div id="main" style="width: 100%; display: flex; justify-content: center;">
-            <div id="wrap">
-                <div id="text">
-                    <div id="code">
-                        <span class="lines">
-                            <span class="say">Chúc mừng sinh nhật người con gái anh yêu</span><br>
-                            <span class="say">Em có nhớ chúng ta yêu nhau được bao nhiêu ngày không?</span><br>
-                            <span class="say">Anh thì nhớ rất rõ đấy.</span><br>
-                            <span class="say"> </span><br>
-                            <span class="say">Người ta nói bệnh nào cũng có thuốc chữa</span><br>
-                            <span class="say">Anh đã không tin điều đó nữa đến khi anh gặp em</span><br>
-                            <span class="say">Đó là căn bệnh hạnh phúc nhất mà anh may mắn được mắc phải</span><br>
-                            <span class="say">Đó là bệnh yêu em quá nhiều</span><br>
-                            <span class="say">Yêu em cho đến khi nào anh không còn tồn tại &lt;3</span><br>
-                            <span class="say">Chúc em sinh nhật vui vẻ.</span><br>
-                            <span class="say"> </span><br>
-                            <span class="say"><span class="space"></span> -- Anh yêu Em --</span>
-                        </span>
-                    </div>
+    <!-- PHẦN 2: TIMELINE CÂY TÌNH YÊU (TRỌN VẸN 1 KHUNG HÌNH NHỜ TỰ ĐỘNG SCALE) -->
+    <section id="timeline" class="page-section" style="background-color: #ffe6f0;">
+        <div id="wrap">
+            <div id="text">
+                <div id="code">
+                    <span class="lines">
+                        <span class="say">Chúc mừng sinh nhật người con gái anh yêu</span><br>
+                        <span class="say">Em có nhớ chúng ta yêu nhau được bao nhiêu ngày không?</span><br>
+                        <span class="say">Anh thì nhớ rất rõ đấy.</span><br>
+                        <span class="say"> </span><br>
+                        <span class="say">Người ta nói bệnh nào cũng có thuốc chữa</span><br>
+                        <span class="say">Anh đã không tin điều đó nữa đến khi anh gặp em</span><br>
+                        <span class="say">Đó là căn bệnh hạnh phúc nhất mà anh may mắn được mắc phải</span><br>
+                        <span class="say">Đó là bệnh yêu em quá nhiều</span><br>
+                        <span class="say">Yêu em cho đến khi nào anh không còn tồn tại &lt;3</span><br>
+                        <span class="say">Chúc em sinh nhật vui vẻ.</span><br>
+                        <span class="say"> </span><br>
+                        <span class="say"><span class="space"></span> -- Anh yêu Em --</span>
+                    </span>
                 </div>
-                <div id="clock-box">
-                    <span class="title">Thời gian anh đã yêu em</span>
-                    <div id="clock" class="units"></div>
-                </div>
-                <canvas id="canvas" width="1100" height="680" style="cursor: pointer;"></canvas>
             </div>
+            <div id="clock-box">
+                <span class="title">Thời gian anh đã yêu em</span>
+                <div id="clock" class="units"></div>
+            </div>
+            <canvas id="canvas" width="1100" height="680" style="cursor: pointer;"></canvas>
         </div>
     </section>
 
-    <!-- PHẦN 3: THƯ VIỆN ẢNH CŨ -->
+    <!-- PHẦN 3: THƯ VIỆN ẢNH (ĐƯỢC PHÉP CUỘN) -->
     <section id="gallery" class="page-section gwrap">
         <header class="ghead">
             <p class="eyebrow">Những khoảnh khắc của chúng mình</p>
@@ -163,9 +183,10 @@
             <figure class="shot"><button type="button" class="shot-btn"><img src="./img/2a.jpg" alt="Kỷ niệm 2" width="1350" height="1800" loading="lazy" /></button></figure>
             <figure class="shot"><button type="button" class="shot-btn"><img src="./img/3a.jpg" alt="Kỷ niệm 3" width="1350" height="1800" loading="lazy" /></button></figure>
         </div>
+        <footer class="foot" style="margin-top: 30px;">Làm bằng cả trái tim, dành tặng vợ yêu ❤️</footer>
     </section>
 
-    <!-- PHẦN 4: HỘP NHẬT KÝ TƯƠNG LAI -->
+    <!-- PHẦN 4: HỘP NHẬT KÝ (ĐƯỢC PHÉP CUỘN) -->
     <section id="memory-box" class="page-section gwrap" style="background-color: #fff;">
         <header class="ghead">
             <p class="eyebrow">Cùng nhau viết tiếp câu chuyện</p>
@@ -182,9 +203,8 @@
         </div>
 
         <div class="masonry" id="memory-board"></div>
+        <footer class="foot" style="margin-top: 30px;">Làm bằng cả trái tim, dành tặng vợ yêu ❤️</footer>
     </section>
-
-    <footer class="foot">Làm bằng cả trái tim, dành tặng vợ yêu ❤️</footer>
 
     <div class="lb" id="lb" hidden role="dialog" aria-modal="true">
         <button type="button" class="lb-x" aria-label="Đóng">&times;</button>
@@ -216,25 +236,41 @@
     <script src="./js/gallery.js" defer></script>
 
     <script>
+        // HÀM TỰ ĐỘNG THU PHÓNG KHUNG CÂY TÌNH YÊU ĐỂ VỪA KHÍT MÀN HÌNH
+        function scaleTimeline() {
+            const wrap = document.getElementById('wrap');
+            const container = document.getElementById('timeline');
+            if (!wrap || !container) return;
+            
+            const cWidth = container.clientWidth;
+            const cHeight = container.clientHeight - 60; // Trừ khoảng trống menu
+            
+            // Kích thước gốc của cây là 1100x680
+            const scaleX = cWidth / 1100;
+            const scaleY = cHeight / 680;
+            const scale = Math.min(scaleX, scaleY) * 0.95; // 0.95 để chừa lại một chút lề cho đẹp
+            
+            wrap.style.transform = `scale(${scale})`;
+            wrap.style.transformOrigin = 'center center';
+        }
+        window.addEventListener('resize', scaleTimeline);
+
         // HÀM CHUYỂN TAB 
         function switchTab(tabId) {
-            // Ẩn tất cả các nội dung
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
-            
-            // Xóa highlight ở tất cả menu
             document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
 
-            // Hiển thị nội dung tương ứng
             const targetSection = document.getElementById(tabId);
             if (targetSection) targetSection.classList.add('active');
 
-            // Highlight menu đang chọn
             const targetMenu = document.querySelector(`a[href="#${tabId}"].tab-link`);
             if (targetMenu) targetMenu.classList.add('active');
 
-            // Chạy hiệu ứng vẽ cây nếu bấm vào phần Timeline
-            if (tabId === 'timeline' && typeof window.startTreeAnimation === 'function') {
-                window.startTreeAnimation();
+            if (tabId === 'timeline') {
+                scaleTimeline(); // Tự động scale khung cho vừa màn hình
+                if (typeof window.startTreeAnimation === 'function') {
+                    window.startTreeAnimation();
+                }
             }
         }
 
@@ -252,7 +288,7 @@
             if (audio.paused) { audio.play(); musicBtn.classList.add("spinning"); }
         }, { once: true });
 
-        // Lời yêu thương ngẫu nhiên
+        // Lời yêu thương
         const loveNotes = [
             "Cảm ơn em vì đã đến bên đời anh.",
             "Nụ cười của em là món quà lớn nhất.",
@@ -336,7 +372,7 @@
         }
         window.addEventListener('DOMContentLoaded', renderMemories);
 
-        // Vẽ cây tình yêu (Chỉ vẽ khi bấm vào Timeline)
+        // Vẽ cây tình yêu
         (function(){
             var canvas = $('#canvas');
             if (!canvas[0].getContext) return false;
@@ -399,13 +435,10 @@
                 $await(moveAnimate()); textAnimate().start(); $await(jumpAnimate());
             }));
 
-            // Biến toàn cục để khởi chạy cây khi chuyển Tab
             window.isTreeAnimated = false;
             window.startTreeAnimation = function() {
                 if (!window.isTreeAnimated) {
-                    hold = 0; 
-                    runAsync().start(); 
-                    window.isTreeAnimated = true;
+                    hold = 0; runAsync().start(); window.isTreeAnimated = true;
                 }
             };
         })();
