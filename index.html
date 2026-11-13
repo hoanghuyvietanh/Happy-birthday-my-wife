@@ -49,16 +49,16 @@
         .menu a { color: #555 !important; font-weight: 500; }
         .menu a.active { color: #ff4d85 !important; font-weight: bold; border-bottom: 2px solid #ff4d85; }
         
-        /* 3. Xử lý Tab Ẩn / Hiện mượt mà (Không dùng absolute) */
+        /* 3. Xử lý Tab Ẩn / Hiện mượt mà */
         .page-section { 
-            display: none !important; /* Ẩn hết tất cả */
+            display: none !important; 
             width: 100%;
-            padding-top: 80px; /* Tránh bị Header đè */
+            padding-top: 80px; 
             box-sizing: border-box;
             min-height: 100vh;
         }
         .page-section.active {
-            display: block !important; /* Chỉ hiện tab active */
+            display: block !important; 
             animation: fadeInTab 0.5s ease forwards;
         }
 
@@ -74,13 +74,6 @@
             align-items: center !important;
             justify-content: center !important;
             text-align: center;
-        }
-        
-        /* Tối ưu ảnh đại diện */
-        #home .avatar { display: flex; justify-content: center; margin-bottom: 15px; width: 100%; }
-        #home .avatar img { 
-            max-height: 25vh; width: auto; 
-            border-radius: 50%; box-shadow: 0 8px 20px rgba(255, 77, 133, 0.2); 
         }
 
         /* Giới hạn khung cây tình yêu */
@@ -126,16 +119,6 @@
         .mem-card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); margin-bottom: 20px; text-align: center; }
         .mem-card h3 { font-family: 'Dancing Script', cursive; font-size: 26px; color: #ff4d85; margin: 10px 0 5px; }
         .del-btn { background: #fff0f5; border: 1px solid #ffb3c6; padding: 5px 15px; border-radius: 15px; color: #ff4d85; cursor: pointer; font-size: 12px; margin-top: 10px; }
-
-        /* Nút phát nhạc */
-        #music-toggle {
-            position: fixed; bottom: 20px; right: 20px; z-index: 9999;
-            background: #ff4d85; color: white; border: none; border-radius: 50%;
-            width: 50px; height: 50px; cursor: pointer; box-shadow: 0 5px 15px rgba(255, 77, 133, 0.4);
-            font-size: 24px; display: flex; align-items: center; justify-content: center;
-        }
-        .spinning { animation: spin 4s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -155,9 +138,6 @@
 
     <!-- PHẦN 1: TRANG CHỦ -->
     <main id="home" class="page-section active">
-        <div class="avatar">
-            <img src="./img/avatar.jpg" alt="Vợ yêu của anh" />
-        </div>
         <p class="eyebrow">Gửi người anh yêu nhất</p>
         <h1 class="script">Chúc mừng sinh nhật<br />em yêu</h1>
         <p class="lead">Hôm nay là ngày của em. Anh gói ghém vài điều nhỏ xíu ở đây, mong em cười thật nhiều.</p>
@@ -247,11 +227,10 @@
         <p class="lb-count"></p>
     </div>
 
-    <!-- Nhạc nền & Nút nổi -->
+    <!-- Nhạc nền (Tự động phát khi bấm vào bất kỳ đâu) -->
     <audio id="player" loop preload="auto">
         <source src="./music/chucmungsinhnhat.mp3" type="audio/mpeg" />
     </audio>
-    <button id="music-toggle" aria-label="Bật/Tắt Nhạc" onclick="toggleMusic()">💿</button>
 
     <!-- CÁC THƯ VIỆN & SCRIPT -->
     <script src="./js/jquery.min.js"></script>
@@ -304,18 +283,12 @@
             }
         }
 
-        // Bật tắt nhạc
+        // Tự động phát nhạc khi click vào màn hình lần đầu tiên
         var audio = document.getElementById("player");
-        var musicBtn = document.getElementById("music-toggle");
-        function toggleMusic() {
-            if (audio.paused) {
-                audio.play(); musicBtn.classList.add("spinning");
-            } else {
-                audio.pause(); musicBtn.classList.remove("spinning");
-            }
-        }
         window.addEventListener('click', function() {
-            if (audio.paused) { audio.play(); musicBtn.classList.add("spinning"); }
+            if (audio.paused) { 
+                audio.play(); 
+            }
         }, { once: true });
 
         // Lời yêu thương ngẫu nhiên
