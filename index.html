@@ -24,9 +24,8 @@
 
     <style>
         /* =========================================
-           BỘ CSS AN TOÀN - CHỐNG VỠ GIAO DIỆN
+           BỘ CSS AN TOÀN & ĐỊNH DẠNG MỚI
            ========================================= */
-        
         body, html { 
             margin: 0; padding: 0; 
             width: 100vw; max-width: 100%;
@@ -36,28 +35,17 @@
         }
 
         .topbar {
-            position: fixed !important;
-            top: 0; left: 0;
-            width: 100%;
-            z-index: 9999;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            box-sizing: border-box;
+            position: fixed !important; top: 0; left: 0; width: 100%; z-index: 9999;
+            background: rgba(255, 255, 255, 0.95); box-shadow: 0 2px 10px rgba(0,0,0,0.05); box-sizing: border-box;
         }
         .menu a { color: #555 !important; font-weight: 500; }
         .menu a.active { color: #ff4d85 !important; font-weight: bold; border-bottom: 2px solid #ff4d85; }
         
         .page-section { 
-            display: none !important; 
-            width: 100%;
-            padding-top: 80px; 
-            box-sizing: border-box;
-            min-height: 100vh;
+            display: none !important; width: 100%; padding-top: 80px; 
+            box-sizing: border-box; min-height: 100vh;
         }
-        .page-section.active {
-            display: block !important; 
-            animation: fadeInTab 0.5s ease forwards;
-        }
+        .page-section.active { display: block !important; animation: fadeInTab 0.5s ease forwards; }
 
         @keyframes fadeInTab {
             0% { opacity: 0; transform: translateY(10px); }
@@ -65,53 +53,87 @@
         }
         
         #home.active, #timeline.active {
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
-            justify-content: center !important;
-            text-align: center;
+            display: flex !important; flex-direction: column !important;
+            align-items: center !important; justify-content: center !important; text-align: center;
         }
 
         #wrap { position: relative; margin: 0 auto; width: 1100px; height: 680px; }
 
-        #gallery.active, #memory-box.active {
-            display: block !important; 
-            padding-bottom: 100px;
-        }
-        .ghead { text-align: center; margin-bottom: 20px; }
+        #gallery.active, #memory-box.active { display: block !important; padding-bottom: 100px; }
+        .ghead { text-align: center; margin-bottom: 30px; }
 
-        .masonry {
-            display: grid !important;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
-            gap: 20px !important;
-            width: 90% !important;
-            max-width: 1000px !important;
-            margin: 0 auto !important;
-            align-items: start;
+        /* =========================================
+           CSS TRỤC THỜI GIAN (TIMELINE) & POLAROID
+           ========================================= */
+        .timeline-container {
+            max-width: 800px; margin: 0 auto; padding: 20px;
+            border-left: 2px dashed #ffb3c6; /* Đường kẻ dọc */
+            position: relative;
         }
-        .masonry .shot { width: 100% !important; margin: 0 !important; }
-        .masonry .shot img { 
-            width: 100% !important; height: auto !important; 
-            border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+        
+        .timeline-item { position: relative; margin-bottom: 50px; padding-left: 30px; }
+        
+        /* Chấm tròn mốc thời gian */
+        .timeline-item::before {
+            content: ''; position: absolute; left: -8px; top: 0;
+            width: 14px; height: 14px; background-color: #ff4d85;
+            border-radius: 50%; box-shadow: 0 0 0 4px #fff9fb;
         }
 
+        .timeline-year-badge {
+            display: inline-block; background: #d6336c; color: white;
+            padding: 4px 12px; border-radius: 15px; font-weight: bold;
+            font-size: 14px; margin-bottom: 10px;
+        }
+
+        .timeline-title { font-family: 'Dancing Script', cursive; font-size: 32px; color: #555; margin: 0 0 10px 0; }
+        .timeline-note { font-size: 15px; color: #777; margin-bottom: 20px; font-style: italic; }
+
+        /* Lưới ảnh Polaroid */
+        .polaroid-grid {
+            display: flex; flex-wrap: wrap; gap: 15px;
+            justify-content: flex-start;
+        }
+
+        .polaroid {
+            background: white; padding: 10px 10px 20px 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 4px; width: calc(50% - 20px); max-width: 250px;
+            transition: transform 0.3s ease;
+        }
+        .polaroid img { width: 100%; height: auto; border-radius: 2px; display: block; }
+        
+        /* Xoay ảnh lộn xộn tự nhiên */
+        .polaroid:nth-child(odd) { transform: rotate(-2deg); }
+        .polaroid:nth-child(even) { transform: rotate(3deg); }
+        .polaroid:hover { transform: scale(1.05) rotate(0deg); z-index: 10; position: relative; }
+
+        /* CSS Màn hình nhỏ */
+        @media (max-width: 600px) {
+            .polaroid { width: 100%; max-width: 100%; }
+            .timeline-container { margin-left: 15px; border-left: 2px dashed #ffb3c6; }
+        }
+
+        /* =========================================
+           FORM TẢI ẢNH
+           ========================================= */
         .upload-area {
-            width: 90%; max-width: 450px; margin: 0 auto 30px; padding: 20px;
+            width: 90%; max-width: 500px; margin: 0 auto 30px; padding: 25px;
             border: 2px dashed #ff85a2; border-radius: 15px;
-            background: #fff; text-align: center;
+            background: #fff; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
         .upload-area input {
-            width: 100%; box-sizing: border-box; padding: 10px; margin-bottom: 10px;
+            width: 100%; box-sizing: border-box; padding: 12px; margin-bottom: 15px;
             border-radius: 8px; border: 1px solid #ffb3c6; font-family: inherit;
         }
         .upload-btn {
-            background: #ff4d85; color: white; border: none; padding: 10px 20px;
-            border-radius: 20px; cursor: pointer; font-weight: 600; width: 100%;
+            background: #ff4d85; color: white; border: none; padding: 12px 20px;
+            border-radius: 25px; cursor: pointer; font-weight: 600; width: 100%; font-size: 16px;
         }
 
-        .mem-card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); margin-bottom: 20px; text-align: center; }
-        .mem-card h3 { font-family: 'Dancing Script', cursive; font-size: 26px; color: #ff4d85; margin: 10px 0 5px; }
-        .del-btn { background: #fff0f5; border: 1px solid #ffb3c6; padding: 5px 15px; border-radius: 15px; color: #ff4d85; cursor: pointer; font-size: 12px; margin-top: 10px; }
+        .manage-card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); margin-bottom: 20px; text-align: left; }
+        .manage-card h3 { color: #ff4d85; margin: 0 0 10px 0; }
+        .del-btn { background: #fff0f5; border: 1px solid #ffb3c6; padding: 8px 15px; border-radius: 15px; color: #ff4d85; cursor: pointer; font-size: 13px; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -175,58 +197,44 @@
         </div>
     </section>
 
-    <!-- PHẦN 3: THƯ VIỆN ẢNH (Ảnh cứng & Ảnh được tải lên) -->
+    <!-- PHẦN 3: THƯ VIỆN ẢNH (TRỤC THỜI GIAN) -->
     <section id="gallery" class="page-section">
         <header class="ghead">
-            <p class="eyebrow">Những khoảnh khắc của chúng mình</p>
+            <p class="eyebrow">Hành trình của chúng mình</p>
             <h1 class="script">Ảnh kỷ niệm</h1>
         </header>
 
-        <!-- Lưới ảnh tĩnh (cũ) -->
-        <div class="masonry" id="gallery-static">
-            <figure class="shot"><button type="button" class="shot-btn"><img src="./img/1a.jpg" alt="Kỷ niệm 1" loading="lazy" /></button></figure>
-            <figure class="shot"><button type="button" class="shot-btn"><img src="./img/2a.jpg" alt="Kỷ niệm 2" loading="lazy" /></button></figure>
-            <figure class="shot"><button type="button" class="shot-btn"><img src="./img/3a.jpg" alt="Kỷ niệm 3" loading="lazy" /></button></figure>
-            <figure class="shot"><button type="button" class="shot-btn"><img src="./img/4a.jpg" alt="Kỷ niệm 4" loading="lazy" /></button></figure>
-            <figure class="shot"><button type="button" class="shot-btn"><img src="./img/5a.jpg" alt="Kỷ niệm 5" loading="lazy" /></button></figure>
-            <figure class="shot"><button type="button" class="shot-btn"><img src="./img/6a.jpg" alt="Kỷ niệm 6" loading="lazy" /></button></figure>
+        <!-- Trục thời gian sẽ hiển thị tại đây -->
+        <div class="timeline-container" id="gallery-timeline">
+            <!-- Nội dung render bằng JS -->
         </div>
-
-        <!-- Lưới ảnh động (Những ảnh đăng từ Nhật Ký sẽ tự động chạy sang đây) -->
-        <div class="masonry" id="gallery-dynamic" style="margin-top: 20px;"></div>
 
         <footer style="margin-top: 50px; text-align: center; width: 100%; color: #888;">Làm bằng cả trái tim, dành tặng vợ yêu ❤️</footer>
     </section>
 
-    <!-- PHẦN 4: HỘP NHẬT KÝ (Nơi để Đăng ảnh & Xóa ảnh) -->
+    <!-- PHẦN 4: HỘP NHẬT KÝ (TẢI NHIỀU ẢNH CÙNG LÚC) -->
     <section id="memory-box" class="page-section">
         <header class="ghead">
             <p class="eyebrow">Cùng nhau viết tiếp câu chuyện</p>
             <h1 class="script">Nhật Ký Tương Lai</h1>
-            <p style="margin-bottom: 20px; color: #666; text-align: center;">Đăng ảnh ở đây, ảnh sẽ tự động được lưu sang tab Ảnh Kỷ Niệm nhé vợ.</p>
+            <p style="color: #666; text-align: center;">Tải nhiều ảnh cùng lúc cho từng mốc thời gian nhé.</p>
         </header>
 
-        <!-- Khung tải ảnh -->
         <div class="upload-area">
-            <input type="number" id="mem-year" placeholder="Sinh nhật năm (VD: 2024)">
-            <input type="text" id="mem-note" placeholder="Vài lời nhắn nhủ (VD: Yêu anh nhất đời)...">
-            <input type="file" id="mem-file" accept="image/*" style="background: white;">
+            <input type="number" id="mem-year" placeholder="Năm (VD: 2024)">
+            <input type="text" id="mem-title" placeholder="Tiêu đề (VD: Kỷ niệm 1 năm ngày cưới)">
+            <input type="text" id="mem-note" placeholder="Vài lời nhắn nhủ/ghi chú...">
+            
+            <!-- Đã thêm thuộc tính multiple để chọn nhiều ảnh -->
+            <input type="file" id="mem-file" accept="image/*" multiple style="background: white;">
+            
             <button class="upload-btn" onclick="saveMemory()">📸 Lưu Kỷ Niệm Lên Album</button>
         </div>
 
-        <!-- Bảng quản lý ảnh đã tải (để xóa nếu lỡ đăng nhầm) -->
-        <div class="masonry" id="memory-board"></div>
+        <div style="max-width: 600px; margin: 0 auto;" id="memory-manage-board"></div>
 
         <footer style="margin-top: 50px; text-align: center; width: 100%; color: #888;">Làm bằng cả trái tim, dành tặng vợ yêu ❤️</footer>
     </section>
-
-    <div class="lb" id="lb" hidden role="dialog" aria-modal="true">
-        <button type="button" class="lb-x" aria-label="Đóng">&times;</button>
-        <button type="button" class="lb-nav lb-prev">&#8249;</button>
-        <img class="lb-img" alt="" />
-        <button type="button" class="lb-nav lb-next">&#8250;</button>
-        <p class="lb-count"></p>
-    </div>
 
     <!-- Nhạc nền -->
     <audio id="player" loop preload="auto">
@@ -246,7 +254,6 @@
     <script src="./js/love.js" charset="utf-8"></script>
     
     <script src="./js/home.js" defer></script>
-    <script src="./js/gallery.js" defer></script>
 
     <script>
         function scaleTimeline() {
@@ -266,10 +273,8 @@
         function switchTab(tabId) {
             document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
-
             const targetSection = document.getElementById(tabId);
             if (targetSection) targetSection.classList.add('active');
-
             const targetMenu = document.querySelector(`a[href="#${tabId}"].tab-link`);
             if (targetMenu) targetMenu.classList.add('active');
 
@@ -282,116 +287,161 @@
         }
 
         var audio = document.getElementById("player");
-        window.addEventListener('click', function() {
-            if (audio.paused) { 
-                audio.play(); 
-            }
-        }, { once: true });
+        window.addEventListener('click', function() { if (audio.paused) audio.play(); }, { once: true });
 
         const loveNotes = [
             "Cảm ơn em vì đã đến bên đời anh.",
             "Nụ cười của em là món quà lớn nhất.",
-            "Yêu em hôm nay và mãi mãi về sau.",
-            "Chúc vợ tuổi mới luôn xinh đẹp và bình an.",
-            "Chỉ cần nhìn thấy em, mọi mệt mỏi đều tan biến."
+            "Yêu em hôm nay và mãi mãi về sau."
         ];
         function showRandomNote() {
             const randomIndex = Math.floor(Math.random() * loveNotes.length);
             document.getElementById("random-note").innerText = loveNotes[randomIndex];
         }
 
-        // --- HÀM XỬ LÝ LƯU VÀ HIỂN THỊ ẢNH ---
-        function saveMemory() {
+        // --- HÀM XỬ LÝ LƯU TỪNG ẢNH BẰNG PROMISE ---
+        function compressImage(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 500; // Nén mạnh hơn để chứa được nhiều ảnh
+                        const scaleSize = MAX_WIDTH / img.width;
+                        canvas.width = MAX_WIDTH;
+                        canvas.height = img.height * scaleSize;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        resolve(canvas.toDataURL('image/jpeg', 0.6)); 
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function saveMemory() {
             const year = document.getElementById('mem-year').value;
+            const title = document.getElementById('mem-title').value || `Kỷ niệm năm ${year}`;
             const note = document.getElementById('mem-note').value;
             const fileInput = document.getElementById('mem-file');
 
-            if (!year || !fileInput.files[0]) {
-                alert('Vợ ơi, nhập đủ năm và chọn ảnh nhé! ❤️'); return;
+            if (!year || fileInput.files.length === 0) {
+                alert('Vợ ơi, nhập đủ năm và chọn ít nhất 1 ảnh nhé! ❤️'); return;
             }
 
-            const file = fileInput.files[0];
-            const reader = new FileReader();
+            let newImages = [];
+            // Chạy vòng lặp để xử lý tất cả ảnh đã chọn
+            for (let i = 0; i < fileInput.files.length; i++) {
+                const base64 = await compressImage(fileInput.files[i]);
+                newImages.push(base64);
+            }
 
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 600;
-                    const scaleSize = MAX_WIDTH / img.width;
-                    canvas.width = MAX_WIDTH;
-                    canvas.height = img.height * scaleSize;
-                    
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    
-                    const base64Image = canvas.toDataURL('image/jpeg', 0.6); 
-                    const newMem = { id: Date.now(), year: year, note: note, image: base64Image };
-                    
-                    let memories = JSON.parse(localStorage.getItem('birthday_memories') || '[]');
-                    memories.push(newMem);
-                    memories.sort((a, b) => b.year - a.year);
-                    localStorage.setItem('birthday_memories', JSON.stringify(memories));
-                    
-                    renderMemories();
-                    
-                    document.getElementById('mem-year').value = '';
-                    document.getElementById('mem-note').value = '';
-                    fileInput.value = '';
-                    alert("Tải lên thành công! Ảnh đã được đưa sang tab Ảnh Kỷ Niệm 🎁");
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
+            // Dùng localStorage với key mới để hỗ trợ cấu trúc nhiều ảnh (Array)
+            let memories = JSON.parse(localStorage.getItem('birthday_memories_v2') || '[]');
+            
+            // Tìm xem năm đó đã có chưa
+            let existingMemoryIndex = memories.findIndex(m => m.year == year);
+            if (existingMemoryIndex > -1) {
+                // Nếu có rồi thì gộp thêm ảnh vào
+                memories[existingMemoryIndex].images.push(...newImages);
+                if (title !== `Kỷ niệm năm ${year}`) memories[existingMemoryIndex].title = title;
+                if (note) memories[existingMemoryIndex].note = note;
+            } else {
+                // Chưa có thì tạo mốc thời gian mới
+                memories.push({ id: Date.now(), year: year, title: title, note: note, images: newImages });
+            }
+            
+            // Sắp xếp năm mới nhất lên đầu
+            memories.sort((a, b) => b.year - a.year);
+
+            try {
+                localStorage.setItem('birthday_memories_v2', JSON.stringify(memories));
+                renderMemories();
+                
+                // Xóa form
+                document.getElementById('mem-year').value = '';
+                document.getElementById('mem-title').value = '';
+                document.getElementById('mem-note').value = '';
+                fileInput.value = '';
+                alert("Tải lên thành công! Vào tab Ảnh Kỷ Niệm để xem trục thời gian nhé.");
+            } catch (e) {
+                alert("Bộ nhớ trình duyệt đã đầy do tải quá nhiều ảnh! Hãy xóa bớt các mốc cũ.");
+            }
+        }
+
+        // Tạo Data mặc định nếu chưa có gì (Để giao diện trông đẹp ngay từ đầu)
+        function initDefaultData() {
+            let memories = JSON.parse(localStorage.getItem('birthday_memories_v2') || '[]');
+            if(memories.length === 0) {
+                memories = [
+                    {
+                        id: 1, year: "2023", title: "Năm đầu tiên anh chính thức được gọi em là Vợ", note: "Những ngày tháng hạnh phúc nhất...",
+                        images: ["./img/1a.jpg", "./img/2a.jpg", "./img/3a.jpg"]
+                    },
+                    {
+                        id: 2, year: "2022", title: "Những chuyến đi của chúng mình", note: "Thanh xuân có em là điều tuyệt vời nhất.",
+                        images: ["./img/4a.jpg", "./img/5a.jpg", "./img/6a.jpg"]
+                    }
+                ];
+                localStorage.setItem('birthday_memories_v2', JSON.stringify(memories));
+            }
         }
 
         function renderMemories() {
-            const memoryBoard = document.getElementById('memory-board'); // Ở tab Nhật Ký
-            const galleryDynamic = document.getElementById('gallery-dynamic'); // Ở tab Ảnh Kỷ Niệm
-
-            let memories = JSON.parse(localStorage.getItem('birthday_memories') || '[]');
+            const timelineContainer = document.getElementById('gallery-timeline');
+            const manageBoard = document.getElementById('memory-manage-board');
+            let memories = JSON.parse(localStorage.getItem('birthday_memories_v2') || '[]');
             
-            memoryBoard.innerHTML = '';
-            if(galleryDynamic) galleryDynamic.innerHTML = '';
+            timelineContainer.innerHTML = '';
+            manageBoard.innerHTML = '';
 
             memories.forEach((mem) => {
-                // 1. In ra tab Nhật Ký (để quản lý / xóa ảnh)
-                memoryBoard.innerHTML += `
-                    <div class="mem-card" id="mem-${mem.id}">
-                        <img src="${mem.image}" alt="Kỷ niệm ${mem.year}" style="width: 100%; border-radius: 10px;" />
-                        <h3>Sinh nhật ${mem.year}</h3>
-                        <p style="color: #666; font-style: italic;">"${mem.note}"</p>
-                        <button class="del-btn" onclick="deleteMemory(${mem.id})">Xóa ảnh này</button>
+                // 1. Tạo HTML cho Lưới Ảnh Polaroid
+                let polaroidHtml = '';
+                mem.images.forEach(imgSrc => {
+                    polaroidHtml += `<div class="polaroid"><img src="${imgSrc}" loading="lazy" /></div>`;
+                });
+
+                // 2. Render vào Trục Thời Gian (Tab Ảnh Kỷ Niệm)
+                timelineContainer.innerHTML += `
+                    <div class="timeline-item">
+                        <div class="timeline-year-badge">${mem.year}</div>
+                        <h3 class="timeline-title">${mem.title}</h3>
+                        ${mem.note ? `<p class="timeline-note">${mem.note}</p>` : ''}
+                        <div class="polaroid-grid">
+                            ${polaroidHtml}
+                        </div>
                     </div>
                 `;
 
-                // 2. In ra thêm ở tab Ảnh Kỷ Niệm (Trưng bày đẹp đẽ)
-                if(galleryDynamic) {
-                    galleryDynamic.innerHTML += `
-                        <figure class="shot">
-                            <button type="button" class="shot-btn" style="border: none; background: none; padding: 0;">
-                                <img src="${mem.image}" alt="Sinh nhật năm ${mem.year}" loading="lazy" />
-                            </button>
-                            <figcaption style="text-align: center; margin-top: 8px; font-family: 'Dancing Script', cursive; font-size: 1.5rem; color: #ff4d85;">
-                                Sinh nhật ${mem.year}
-                            </figcaption>
-                        </figure>
-                    `;
-                }
+                // 3. Render vào Tab Nhật Ký (Để Quản lý / Xóa)
+                manageBoard.innerHTML += `
+                    <div class="manage-card">
+                        <h3>Mốc năm: ${mem.year} - ${mem.images.length} bức ảnh</h3>
+                        <p style="margin-top:0;"><strong>Tiêu đề:</strong> ${mem.title}</p>
+                        <button class="del-btn" onclick="deleteMemory(${mem.id})">Xóa toàn bộ mốc ${mem.year}</button>
+                    </div>
+                `;
             });
         }
 
         function deleteMemory(id) {
-            if(confirm('Em có chắc muốn xóa bức ảnh này không? (Ảnh sẽ biến mất ở cả tab Kỷ Niệm)')) {
-                let memories = JSON.parse(localStorage.getItem('birthday_memories') || '[]');
+            if(confirm('Chắc chắn muốn xóa mốc thời gian này? (Toàn bộ ảnh trong năm sẽ bị xóa)')) {
+                let memories = JSON.parse(localStorage.getItem('birthday_memories_v2') || '[]');
                 memories = memories.filter(m => m.id !== id);
-                localStorage.setItem('birthday_memories', JSON.stringify(memories));
+                localStorage.setItem('birthday_memories_v2', JSON.stringify(memories));
                 renderMemories();
             }
         }
-        window.addEventListener('DOMContentLoaded', renderMemories);
 
-        // --- CODE VẼ CÂY TÌNH YÊU ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initDefaultData();
+            renderMemories();
+        });
+
+        // Vẽ cây
         (function(){
             var canvas = $('#canvas');
             if (!canvas[0].getContext) return false;
